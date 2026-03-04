@@ -226,4 +226,4 @@ MIT — Use it, fork it, make it yours.
 
 ---
 
-Built by [@runes_leo](https://x.com/runes_leo)
+Built by [@runes_leo](https://x.com/runes_leo) — more AI tools at [leolabs.me](https://leolabs.me) — [Telegram Community](https://t.me/runesgang)
