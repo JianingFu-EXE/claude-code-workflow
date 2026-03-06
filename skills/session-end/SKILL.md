@@ -1,107 +1,53 @@
 ---
 name: session-end
-description: Session wrap-up - update handoff + commit + auto-record experience
-version: 1.0.0
+description: Auto wrap-up at end of session. Save progress, update memory, record lessons.
 allowed-tools:
   - Read
   - Write
   - Edit
-  - Bash
+  - Glob
 ---
 
-# Session End — Wrap-up Workflow
+# Session End Protocol
 
-> Trigger: `/session-end` or exit signals ("that's all for now" / "heading out")
+When triggered (exit signal detected or user says done):
 
-## Core Steps (5 steps)
+## 1. Process TEMPORARY_NOTES inbox
+- Read every file in `<RESEARCH>/TEMPORARY_NOTES/`
+- For each note:
+  - **Prepend frontmatter**: `title`, `date`, `tags` (inferred from content), `project` (if identifiable)
+  - **Append `## Claude's Notes`** at the bottom: context, related links to ongoing work, important connections, anything Claude noticed
+  - **Move** to the correct folder based on content:
+    - Project-related -> `FLEETING NOTES/{Project}/`
+    - Literature/paper note -> `PAPER_NOTES/`
+    - General knowledge -> `PERMANENT_NOTES/`
+    - Daily log -> `DAILY_NOTES/`
+  - **Never modify** the user's original text — only add above (frontmatter) and below (Claude's Notes)
+- `TEMPORARY_NOTES/` should be empty after processing
 
-### 1. Experience Recording
+## 2. Write project daily reports
+- For each project worked on today, write/append a daily report in `<FN>/{Project}/`
 
-Review the session for valuable learnings:
+## 3. Update today.md
+- Append session summary with what was done, key decisions, next steps
+- Format: `### SN (~HH:MM) [Project] Description`
 
-**Recording threshold (must meet at least one)**:
-- Reusability: Next time encountering similar problem, can look it up directly
-- Counter-intuitive: Violates common assumptions
-- High cost: Took >10 minutes cumulative
+## 4. Update MEMORY.md
+- Add any new technical pitfalls or patterns discovered
+- Update any existing entries that were refined
 
-**Don't record**:
-- One-shot small fixes
-- Project-specific temporary config
-- Issues already in patterns.md
+## 5. Update active-tasks.json
+- Mark completed tasks
+- Update context/next_action for in-progress tasks
+- Add new multi-session tasks if discovered
 
-### 2. today.md Hot Data Layer
+## 6. Update goals.md
+- Check off completed goals
+- Add newly discovered goals
 
-Append to `memory/today.md`:
-```markdown
-### SN (HH:MM~) [project/topic]
-- [1-2 sentences of what was done]
-- [Important decisions/discoveries]
-- [Next steps]
-- [Recorded: yes/no - brief description]
-```
-
-### 2.5. goals.md + projects.md Status Refresh
-
-**Identify projects touched in this session** (from today.md, changed files, conversation content).
-
-**goals.md update**:
-- **Completed** → Remove entry (today.md already has the record)
-- **Progress made** → Update description
-- **New important item discovered** → Add to current week (max 5 items)
-
-**projects.md update** (only rows for touched projects):
-- Metric changes → Update (e.g. follower count, stars, metrics)
-- Status changes → Update (e.g. "not started" → "first version shipped")
-
-### 2.7. active-tasks.json In-flight Task Update
-
-Read `memory/active-tasks.json`, update based on session work:
-
-**Rules**:
-- Tasks progressed → Update `context`/`next_action`/`updated`
-- New multi-session tasks → Append new entry
-- Completed tasks → Remove (today.md has the record)
-- Blocker resolved → Change `status` from `blocked` to `active`
-- Stale (>14 days no update) → Remind user if still needed
-
-### 3. PROJECT_CONTEXT.md Handoff
-
-Update `<!-- handoff:start/end -->` block.
-
-**Auto-trim (every execution)**:
-- Keep only **latest + 1 previous** handoff block within markers
-- Delete older handoffs (git history has full record)
-- Target: SESSION_HANDOFF section ≤80 lines
-
-### 4. Git Commit (when there are changes)
-
-```bash
-git add [specific files]  # Never git add .
-git commit -m "[type]: [description]"
-```
-
-### 5. Content Mining (Optional)
-
-**Condition**: today.md has ≥3 session records for the day.
-
-Quick scan today.md for 1-2 findings with sharing potential (counter-intuitive / data-driven / pitfall-to-solution).
-
-**Output (when found)**:
-```
-Content material: Found N shareable discoveries today
-  1. [Title] — [one-line angle]
-  2. [Title] — [one-line angle]
-```
-
-**Nothing found**: Skip silently.
-
-## Output Format
-
-```
-Experience: [Recorded N items / None needed]
-today.md updated
-Task registry: [+N new / ~N updated / -N completed | Total N in-flight]
-Handoff updated
-Committed [N] files
-Content material: [N items / none (<3 sessions)]
-```
+## 7. Final Summary
+Output to user:
+- What was accomplished
+- TEMPORARY_NOTES processed: list what was sorted where
+- What's pending for next session
+- Any blockers or decisions needed

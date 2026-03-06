@@ -1,108 +1,178 @@
-# Builder Workflow Template — Claude Code Global Memory
+# Research Workflow Template — Claude Code Global Memory
 
 > Auto-loaded = rules/ (behaviors.md, skill-triggers.md, memory-flush.md)
-> On-demand = docs/ (agents.md, content-safety.md, task-routing.md, behaviors-extended.md, ...)
-> Hot data layer → memory/today.md + memory/active-tasks.json
+> On-demand = docs/ (agents.md, content-safety.md, task-routing.md, ...)
+> Hot data layer = memory/today.md + memory/active-tasks.json
 
 ---
 
 ## User Info
 
-- **Name**: YOUR_NAME | **Project dir**: /path/to/your/projects
-- **Identity**: [Your role, e.g. "Full-stack developer" / "AI builder" / "Indie hacker"]
-- **X/Twitter**: @your_handle
-- **Philosophy**: [Your working philosophy, e.g. "Learn by doing + share publicly"]
+- **Name**: YOUR_NAME | **University**: YOUR_UNIVERSITY
+- **Identity**: [Your role, e.g. "PhD student — reinforcement learning for robotics"]
+- **Supervisor**: [Supervisor name]
+- **Thesis**: "[Your thesis title]"
+- **Languages**: [e.g. "MATLAB/Simulink (plant model), Python (training), C++ (firmware)"]
+- **Philosophy**: [e.g. "Rigorous experimentation + systematic paper-to-thesis pipeline"]
+- **Core pattern**: XMind first, then write. XMind mind maps are the structural blueprint — Claude reads them as instructions to produce LaTeX, Obsidian notes, or any written output.
+
+### Platform & Tool Stack
 
 <!--
-  Add your platform-specific info here. Examples:
-
-  ### Platform Accounts
-  | Platform | Username/Address |
-  |----------|-----------------|
-  | GitHub   | @your_github    |
-  | Vercel   | your-team       |
+  Customize this table with the tools you actually use.
+  Remove rows you don't need, add your own.
 -->
+
+| Tool | Purpose | Location |
+|------|---------|----------|
+| Obsidian | Daily progress, research notes, mind maps | [Your vault path] |
+| Overleaf | Thesis + paper drafting (git-synced) | See project paths below |
+| Zotero | Reference management | [Zotero library ID or path] |
+| NotebookLM | Source-grounded literature Q&A | See notebook URLs below |
+| XMind | **Structural blueprint for all writing** — Claude reads .xmind as instructions | `MindMap/` in vault |
+
+### Key Paths
+
+<!--
+  Define shorthands so rules/behaviors.md can reference paths concisely.
+  Replace these with your actual paths.
+-->
+
+| Shorthand | Path |
+|-----------|------|
+| `<PHD>` | `/path/to/your/phd/vault` |
+| `<RESEARCH>` | `/path/to/your/research/vault` |
+| `<FN>` | `<RESEARCH>/FLEETING NOTES` |
+| `<TEMP>` | `<RESEARCH>/TEMPORARY_NOTES` |
+| `<CODE>` | `/path/to/your/code/repos` |
+
+### Research Vault Structure
+
+<!--
+  This is an Obsidian Zettelkasten-style vault.
+  Adjust folder names to match your setup.
+-->
+
+```
+<RESEARCH>/
+  TEMPORARY_NOTES/   <-- User's inbox. Raw notes, no frontmatter. Claude sorts at end-of-day.
+  FLEETING NOTES/    <-- Project workspaces (one folder per project)
+  PERMANENT_NOTES/   <-- Mature, reusable knowledge
+  PAPER_NOTES/       <-- Literature notes on specific papers
+  DAILY_NOTES/       <-- Date-stamped daily logs
+  ASSETS/            <-- Images, diagrams
+```
+
+---
+
+## Projects — Per-Project Workspace Map
+
+Each project is a self-contained workspace. All its artefacts (code, XMind, Overleaf, notes, daily reports) live together under `<FN>/{Project}/`. Claude writes daily reports there and reads XMind from there.
+
+<!--
+  Replace these examples with your actual projects.
+  Each project should list: status, workspace path, code path, overleaf path,
+  XMind files, NotebookLM URL, and daily report location.
+-->
+
+### Project 1: [Your First Project] (STATUS)
+- **Status**: [e.g. Published / Under review / Active] | **Thesis chapter**: Ch N
+- **Workspace**: `<FN>/Project-1-Name/`
+- **Code**: `<CODE>/project-1/`
+- **Overleaf**: `<FN>/Project-1-Name/overleaf/`
+- **XMind**: `<FN>/Project-1-Name/Structure.xmind`
+- **NotebookLM**: `https://notebooklm.google.com/notebook/YOUR_NOTEBOOK_ID`
+- **Daily reports**: write to `<FN>/Project-1-Name/`
+
+### Project 2: [Your Second Project] (STATUS)
+- **Status**: [status] | **Thesis chapter**: Ch N
+- **Workspace**: `<FN>/Project-2-Name/`
+- ...
+
+### Thesis
+- **Workspace**: `<FN>/Thesis/` + `<PHD>/OverLeaf/`
+- **Overleaf**: `<PHD>/OverLeaf/Thesis.tex`
+- **Structure**: [Your chapter mapping, e.g. Ch1 Intro, Ch2 Lit Review, Ch3-5 Projects, Ch6 Conclusion]
+- **Mind maps**: `<PHD>/MindMap/`
 
 ---
 
 ## Delivery Standards
 
 - **Truth > Speed**: Never claim completion without verification evidence
-- **Small Batch**: ≤15 files or ≤400 lines net change per commit
-- **No Secrets**: Never commit API keys/tokens
-- **Reversible**: Must have rollback path
+- **Small Batch**: <=15 files or <=400 lines net change per commit
+- **No Secrets**: Never commit API keys/tokens (Zotero, Overleaf credentials, etc.)
+- **Reproducibility**: Every experiment must log hyperparameters, random seeds, input data config
 - **Self-verify**: Run lint/build/test before declaring done, read output to confirm PASS
-- **Banned phrases**: "I fixed it, you try" / "Should be fine" / "Probably passes" / "Theoretically correct" / "I think it's fixed"
+- **Banned phrases**: "I fixed it, you try" / "Should be fine" / "Probably passes" / "Theoretically correct"
 
-Multi-model cross-check (for critical logic): Claude analysis → Codex verification → label `✅ reviewed / ⚠️ unverified`
+### LaTeX Standards
+- Preserve Overleaf sync compatibility — no destructive renames
+- Use consistent citation style (e.g. `authoryear` with biblatex + biber)
+- Keep technical claims source-grounded (paper text, references, or NotebookLM)
+- Do not invent references, results, or experimental details
 
 ### Handoff Checklist (before session-end)
 
-- [ ] Code committed and passes lint/build/test
+- [ ] Code committed or progress noted
 - [ ] today.md updated with progress and key decisions
-- [ ] MEMORY.md / patterns.md updated with lessons learned
-- [ ] Deploy docs updated (if VPS/config changes involved)
-- [ ] Remaining issues and v2 improvements noted
+- [ ] MEMORY.md updated with lessons learned
+- [ ] Remaining issues and next steps noted
 
 ---
 
 ## Work Preferences
 
-- **Language**: [Your language] | **Code**: Follow project lint rules | **Commits**: Atomic, one commit = one change
-- **Verification**: Claude runs it | **Tests**: Must work offline, use mock/fixtures
+- **Language**: English (academic) | **Code**: Follow project conventions | **Commits**: Atomic, one change per commit
+- **Verification**: Claude runs it | **Tests**: Must work offline where possible
 
 ---
 
 ## Collaboration Preferences
 
 - Act as advisor, devil's advocate, mirror — proactively point out blind spots, never be a yes-man
-- **Auto-execute**: P0/P1 bugs, bug fixes, ≤100 line refactors
+- **Auto-execute**: Bug fixes, <=100 line refactors, Obsidian note creation, XMind generation
 - **Auto-intercept**:
-  * **New project/service** → Ask first: "Can a platform service (Vercel/Supabase/Cloudflare) replace self-hosting?"
-  * **Tech stack choices** → Prefer low-scaffolding solutions. Target: single feature ≤200 lines, single service ≤3000 lines
-- **Require confirmation (Critical decision points — Stop and check in)**:
-  * Tech stack choices (framework/library/architecture pattern)
-  * Data model changes (schema/API contract)
-  * Account/wallet/fund flow changes
-  * Features outside roadmap
-  * >100 line refactors
-  * Trade-offs (performance vs maintainability / speed vs quality)
-- **Never self-decide**: Delete projects, production deploys, fund operations
+  * **New experiment** -> Ask: "What is the hypothesis? What are the controls?"
+  * **Paper claim without evidence** -> Flag immediately
+- **Require confirmation (stop and check in)**:
+  * Reward/loss function changes (affects all training)
+  * Simulation model modifications
+  * Overleaf structural changes (chapter reordering, section deletion)
+  * Training hyperparameter changes
+  * Thesis structure decisions
+  * Literature claims to be cited
+- **Never self-decide**: Delete experiment data, push to Overleaf, modify simulation models
 - **Banned**: "Is this OK?" / "Should I pick A or B?" / "Should I continue?"
-- **No filler intros**: Don't say "OK let me help" / "Let me take a look" / "Sure!" — go straight to the answer or start working
+- **No filler intros**: Go straight to the answer or start working
 
 ---
 
 ## Experience Recall & Evolution
 
-**Mandatory triggers (check every conversation turn)**:
-- 🔍 **Encountering Bug/Error/Stuck** → First step: `memory_search "<problem keywords>"`
-- 📝 **Corrected by user** → Immediately: `memory_add` to record lesson
-- 🆕 **Starting new task** → Check: patterns.md for related pitfalls
+**Mandatory triggers (check every turn)**:
+- Encountering Bug/Error/Stuck -> First step: check memory files for related patterns
+- Corrected by user -> Immediately record lesson in MEMORY.md
+- Starting new task -> Check patterns.md for related pitfalls
+- If executed >8 tools on a complex task -> REFLECT and record learning
 
 ---
 
-- **Recall First**: Encountering Bug/Error → First step: query memory. No recall before debugging = process violation.
-- **Self-Evolution**: If executed >8 tools on a complex task, REFLECT: "Which system should capture this learning?" and record it.
-
----
-
-## SSOT Ownership (Single Source of Truth — modify SSOT first, never create duplicates)
+## SSOT Ownership (Single Source of Truth)
 
 | Info Type | SSOT File | Do NOT write to |
 |-----------|-----------|-----------------|
-| Infrastructure/Servers/Cron | `memory/infra.md` | Code comments |
-| Project strategic status | Each project's `PROJECT_CONTEXT.md` | today.md, projects.md |
+| Daily reports (per-project) | `<FN>/{Project}/` workspace (Obsidian .md) | today.md, MEMORY.md |
 | Cross-project overview | `memory/projects.md` | (summary + pointers only) |
-| Technical pitfalls | Each project's `MEMORY.md` | today.md (today = progress only) |
-| Daily progress | `memory/today.md` | (temp layer, archived next day) |
+| Technical pitfalls | `MEMORY.md` (per-project auto memory) | today.md |
+| Session-level progress | `memory/today.md` | (temp layer, archived next day) |
 | In-flight task registry | `memory/active-tasks.json` | (cross-session task status) |
-
-<!--
-  Add your domain-specific SSOT entries here. Examples:
-  | Portfolio positions | `memory/portfolio.md` | Other docs |
-  | Health records | `vault/health/` | Other docs |
--->
+| Experiment results | Project workspace daily reports | MEMORY.md |
+| Paper/thesis structure | XMind maps in project workspace (authoritative) | Plain text notes |
+| Paper LaTeX source | Overleaf repo in project workspace | Duplicate elsewhere |
+| Reference notebook | Per-project NotebookLM (see URLs above) | Don't duplicate content |
+| Code | `<CODE>/` repos | Obsidian notes |
+| Raw notes inbox | `<TEMP>/` — user writes here, Claude sorts at end-of-day | Modify user text |
 
 ---
 
@@ -110,21 +180,21 @@ Multi-model cross-check (for critical logic): Claude analysis → Codex verifica
 
 | Layer | File | What to write |
 |-------|------|---------------|
-| Auto Memory | Project `MEMORY.md` | Technical pitfalls, API details |
+| Auto Memory | Project `MEMORY.md` | Technical pitfalls, API details, tool configs |
 | Pattern library | `patterns.md` | Cross-project reusable patterns |
 | Hot data layer | `today.md` | Daily progress, handoff |
 | Task registry | `active-tasks.json` | Cross-session in-flight tasks |
 
-### Sub-project Memory Routes (read before operating on a project)
+### Sub-project Memory Routes
 
 <!--
-  Customize this table with your own projects:
+  Map keywords to the right MEMORY.md for each project.
+  Replace with your actual project keywords and paths.
 
   | Keywords | Memory path |
   |----------|-------------|
-  | frontend/UI/dashboard | `~/.claude/projects/-path-to-frontend/memory/MEMORY.md` |
-  | backend/API/server | `~/.claude/projects/-path-to-backend/memory/MEMORY.md` |
-  | data/analytics | `~/.claude/projects/-path-to-data/memory/MEMORY.md` |
+  | project-1/keyword-a/keyword-b | `~/.claude/projects/-path-to-project-1/memory/MEMORY.md` |
+  | project-2/keyword-c/keyword-d | `~/.claude/projects/-path-to-project-2/memory/MEMORY.md` |
 -->
 
 Routes determine write targets. Unlisted projects share the main MEMORY.md.
@@ -138,10 +208,9 @@ Routes determine write targets. Unlisted projects share the main MEMORY.md.
 | Project overview | `Read memory/projects.md` |
 | Agent/multi-model collaboration | `Read docs/agents.md` |
 | AI content safety/quality control | `Read docs/content-safety.md` |
-| Task routing details/model costs | `Read docs/task-routing.md` |
-| New project/tech stack decisions | `Read docs/scaffolding-checkpoint.md` |
+| Task routing details | `Read docs/task-routing.md` |
+| Extended behaviors | `Read docs/behaviors-extended.md` |
 | Behavior reference details | `Read docs/behaviors-reference.md` |
-| Extended behaviors (knowledge base, etc.) | `Read docs/behaviors-extended.md` |
 | Cross-day goals/todos | `Read memory/goals.md` |
 | Pattern library | `Read patterns.md` |
 

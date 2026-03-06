@@ -1,143 +1,68 @@
-# AI Content Extraction Safety + Quality Control
+# Content Safety & Research Integrity
 
-> On-demand loading. Trigger conditions in rules/behaviors.md.
+> On-demand loading. Rules for maintaining academic integrity in AI-assisted research.
+
+## Core Principles
+
+1. **Never fabricate data, results, or citations**
+2. **Never claim a source says something it doesn't** — verify with reference notebook when possible
+3. **Always distinguish between**: verified fact, reasonable inference, speculation
+4. **Flag uncertainty explicitly** rather than presenting guesses as facts
+
+## Citation Rules
+
+- Only cite papers that exist and say what you claim they say
+- When uncertain about a citation, use the project's reference notebook to verify against uploaded sources
+- If a paper isn't in the reference notebook or reference manager, flag it for manual verification
+- Never generate fake DOIs, page numbers, or publication details
+
+## Experiment Reporting
+
+- Report actual metrics from experiment logs / simulation output
+- Never round or approximate in a way that changes the conclusion
+- Always note the specific run/config that produced a result
+- If comparing methods, ensure fair comparison (same input data, same conditions, same duration)
+
+## AI-Assisted Writing Disclosure
+
+- The user decides what to disclose about AI assistance
+- Claude's role: drafting, editing, literature search, analysis
+- Claude does NOT: run simulations, generate real data, peer review
+
+## Hallucination Prevention
+
+- After >20 turns, suggest a fresh session to avoid context drift
+- After >50 tool calls, reflect on accumulated context quality
+- When citing numerical results, always trace back to source
+- When making theoretical claims, verify against standard references
+- Flag any response where confidence is low
+
+## Red Flags to Auto-Catch
+
+- Claiming "simulation shows X" without a specific run reference
+- Citing a paper with details that don't match reference manager entry
+- Making domain-specific physics/engineering claims without justification
+- Presenting theoretical properties without proof or reference
 
 ---
 
-## AI Content Extraction Safety (Mandatory - Auto-execute)
-
-> Systematic protection against "fabrication, memory pollution, context drift" — the three major AI risks
-
-### Source Attribution Requirements
+## Source Attribution Requirements
 
 **Trigger scenarios (auto-detect)**:
-- Processing any external URL (tweet/article/video/doc)
+- Processing any external URL (article/paper/doc)
 - Extracting key points, summarizing, citing others' views
-- Saying "N key points/tips from the source"
 
-**Mandatory output format**:
-```
-### [Content Title]
+**Mandatory**: Annotate source for each claim. If source cannot be confirmed, label `[Cannot verify, recommend manual check]`.
 
-[Body text]
+## Context Pollution Isolation (Auto-detect)
 
-Source: [URL] - Paragraph X / Line Y / Tweet Z
-```
-
-**Auto-detection & interception**:
-- If saying "source has N items", must annotate source for each, otherwise output:
-  ```
-  Detected unattributed cited content
-
-  I need to annotate specific source for each item (which paragraph/line).
-  If source cannot be confirmed, I'll label [Cannot verify, recommend manual check]
-  ```
-
-- If content seems "too reasonable/too neat/too perfect", auto-question:
-  ```
-  This content sounds very plausible, but I need to confirm:
-  - Is this directly quoted from source?
-  - Or did I pattern-complete it?
-
-  Re-checking source...
-  ```
-
-**Banned behaviors**:
-- Output unattributed "N key points from source"
-- Pattern-complete then disguise as source content
-- Cannot verify but continue outputting without warning user
-
-### Multi-Model Cross-Verification (Critical Content)
-
-**Auto-trigger scenarios (no manual request needed)**:
-1. **Content to be posted** (detected "post/tweet/share" keywords)
-2. **Citing others' views** (contains @username or "XXX said/thinks/suggests")
-3. **Data/number reasoning** (specific numbers, percentages, amounts)
-4. **Critical business decisions** (involving important parameters/configurations)
-
-**Auto-execution flow**:
-```
-Step 1: Detect critical content
-  |
-Step 2: Output prompt
-  "This is critical content (citation/numbers/business logic), need multi-model verification?
-   - [y] Claude -> Codex/other cross-verification
-   - [n] Skip verification (at your own risk)
-   - [s] Save draft, manual check later"
-  |
-Step 3: If user selects [y], auto-call second model for verification
-  |
-Step 4: Compare outputs, annotate differences
-  "Both models agree"
-  or
-  "Difference found:
-   - Claude: [output A]
-   - Other: [output B]
-
-   Recommend manual source check"
-```
-
-### Context Pollution Isolation (Auto-detect)
-
-**Trigger conditions (AI self-detects)**:
+**Trigger conditions**:
 1. **Obvious factual error**: User correction / self-discovered output != source
-2. **Hallucination signature**: Pattern-complete without traceable source / fabricated data
+2. **Hallucination signature**: Pattern-completed without traceable source / fabricated data
 3. **Memory conflict**: Current output contradicts previous records
 
-**Auto-execute action**:
-```
-Detected output error/hallucination, executing context isolation:
-
-1. Stopping current conversation on this topic
-2. Suggesting user start fresh conversation, or wait for context cleanup
-3. Marked error content, will NOT write to memory
-
-Reason: Continuing in polluted context may reinforce wrong cognition.
-```
-
-**Banned**: Continuing in same session after finding error / Writing error to memory / Pretending it's fixed
-
-### Long Conversation Re-Anchor (Auto-trigger)
-
-**Trigger**: >20 conversation turns, or >15 turns since last re-anchor
-
-**Auto-execute**:
-```
-Conversation has been going for [N] turns, executing re-anchor check:
-
-My current understanding of the task:
-1. [Main goal]
-2. [Key constraints]
-3. [Completed parts]
-
-Is this correct? Please point out any drift.
-```
+**Action**: Stop, flag the error, do NOT write to memory. Suggest fresh session if context is polluted.
 
 ---
 
-**Summary**:
-- External content -> Must annotate source
-- Critical content -> Auto-prompt verification
-- Error found -> Immediately isolate context
-- Long conversation -> Auto re-anchor
-- Cannot verify -> Explicitly tell user
-
----
-
-## Quality Control
-
-### Instruction Adherence Detection
-- Mark important rule adherence (e.g. "Verified" / "Checked SSOT")
-- If you find yourself violating rules -> proactively warn: "I may be forgetting early instructions, suggest fresh session"
-
-### Context Usage Threshold
-- >20 turns or >50 tool calls -> Proactively suggest fresh session
-- Reply quality declining (forgetting rules, repeating issues) -> Immediately suggest fresh session
-
-### Adversarial Error-Checking (Critical Code)
-- During verification: "If I were an attacker, how would I find vulnerabilities?" / "What happens in extreme cases?" / "Any edge cases missed?"
-- Critical business code -> Must list 3 potential risk points
-
----
-
-*Split from rules/behaviors.md*
+*Split from rules/behaviors.md for on-demand loading*

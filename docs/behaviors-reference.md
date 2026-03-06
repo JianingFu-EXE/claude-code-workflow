@@ -1,42 +1,86 @@
-# Behavior Rules — Reference Details (On-demand loading)
+# Behaviors Reference
 
-> Core rules in `rules/behaviors.md`. Detailed operation guides here.
+> On-demand loading. Detailed operation guides for specific scenarios.
 
----
+<!--
+  Add domain-specific operation guides here.
+  Below are examples for common research tool stacks.
+  Replace or extend with your own tools.
+-->
 
-## Browser/Puppeteer Conflict Handling
+## Overleaf/LaTeX Operations
 
-When Puppeteer reports "browser is already running":
-1. **Never tell user "can't do it"**
-2. Proactively kill occupying process: `pkill -f "chrome.*puppeteer-profile" || true`
-3. Retry original operation
-4. If still failing, use fallback (oEmbed, curl, etc.)
+### Thesis Compilation
+- Backend: biber (not bibtex) — or your project's backend
+- Citation style: authoryear — or your project's style
+- Chapter files: `ch1/introduction.tex` through `chN/conclusion.tex`
+- Bibliography: `refs.bib`
 
-Principle: **Solve the problem yourself, don't throw failures to user.**
+### Staging (temporary.tex)
+- **All new/modified content goes to `temporary.tex`**, never directly to `main.tex`
+- `temporary.tex` copies the full preamble from `main.tex` so it compiles independently
+- Additions highlighted with `\added{}` (blue), deletions with `\deleted{}` (red strikethrough)
+- User audits iteratively until satisfied, then says "merge" / "push to main"
+- On merge: strip highlighting commands, apply changes to `main.tex`, delete `temporary.tex`
 
----
+### Git Sync
+- Always pull before editing, push only with user confirmation
+- Never force push to shared Overleaf repos
 
-## Memory Search — Scope Routing Table
+## Obsidian Operations
 
-**No** unscoped global search (hundreds of docs flat = terrible signal-to-noise).
+### Vault Structure
+- Project workspaces under `FLEETING NOTES/{Project}/`
+- Each workspace contains: research notes, XMind files, daily reports, overleaf subfolder
+- `TEMPORARY_NOTES/` is the inbox — processed at end-of-day
 
-| Keywords | Collection |
-|----------|-----------|
-| Your project keywords | `project-name` |
-| Memory / patterns / recall / pitfalls | `memory` or `patterns` |
-| Notes / knowledge base | `vault` |
-| Not sure | Start with `memory`, expand to `all` if needed |
+### Note Lifecycle
+```
+TEMPORARY_NOTES/ (raw capture)
+  -> FLEETING NOTES/{Project}/ (sorted, structured)
+  -> PERMANENT_NOTES/ (mature, reusable)
+```
 
-Example: `qmd search "deployment issue" collection=your-project`
+## Reference Manager Operations
 
-### Code/Project Search: Two-stage RAG
+<!--
+  Example for Zotero:
+  - Library ID: [your library ID], type: user
+  - Credentials: [path to credentials file]
+  - Use import skill for bulk import from academic databases
+-->
 
-When finding "where is this feature":
-1. **L0** First `ls` or `find . -maxdepth 2` to locate candidate directories/files (<=5)
-2. **L1** Only search within candidates using `grep` or `qmd search`
+## Experiment Platform Operations
+
+<!--
+  Add guides for your simulation/training tools. Examples:
+
+  ### MATLAB/Simulink
+  - Check signal dimensions first (most common error)
+  - S-Function interface: inputs are commands, outputs are states
+  - Key outputs: [list your important signals]
+
+  ### Python ML Training
+  - Config: `config.yaml` in project root
+  - Key params: [list important hyperparameters]
+  - Common failure modes: device mismatch, data loader issues, gradient issues
+-->
+
+## Memory Search — Scope Routing
+
+| Keywords | Search scope |
+|----------|-------------|
+| Project-specific keywords | Project MEMORY.md |
+| Memory / patterns / recall / pitfalls | `memory/` or `patterns.md` |
+| Notes / vault content | Obsidian vault |
+| Not sure | Start with `memory/`, expand if needed |
+
+### Code/Project Search: Two-stage
+1. First locate candidate directories/files
+2. Then search within candidates
 
 Banned: Unscoped full-text search across entire project.
 
 ---
 
-*Split from rules/behaviors.md*
+*Split from rules/behaviors.md for on-demand loading*
