@@ -27,11 +27,19 @@
 |-------|-------|-----------|
 | **note-taker** | Obsidian notes | Daily reports, experiment logs, meeting notes |
 
+### Implementation Tier (subagent-driven-development)
+
+| Agent | Scope | Core Duty |
+|-------|-------|-----------|
+| **implementer** | Task execution | Implement one plan task, self-review, commit |
+| **spec-reviewer** | Spec compliance | Verify implementation matches requirements (nothing more, nothing less) |
+| **quality-reviewer** | Code quality | Review clean code, tests, maintainability (only after spec passes) |
+
 ### Coordinator (Main Agent = Claude)
 
 | Duty | Description |
 |------|-------------|
-| **Orchestrate** | Dispatch tasks to skills (NotebookLM, Zotero, XMind, etc.) |
+| **Orchestrate** | Dispatch tasks to skills and subagents |
 | **Decide** | Final judgment on research direction, paper claims |
 | **Memory** | Maintain hot data layer (today.md, MEMORY.md) |
 | **Challenge** | Devil's advocate on experimental design and paper claims |

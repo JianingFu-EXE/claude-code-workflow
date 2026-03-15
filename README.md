@@ -21,6 +21,10 @@ The original template targets software developers and indie hackers. This fork a
 | **Academic Content Safety** | Never fabricate data/citations, verify claims against reference notebooks, flag uncertainty |
 | **Research-Specific Agents** | paper-reviewer, experiment-tracker, literature-scout (alongside the original pr-reviewer, security-reviewer) |
 | **Auto Model Selection** | Opus for reasoning, Sonnet subagents for daily work, Haiku for mechanical tasks — saves tokens automatically |
+| **Test-Driven Development** | RED-GREEN-REFACTOR enforced for all features and bugfixes — no production code without a failing test |
+| **Subagent-Driven Development** | Fresh subagent per task + two-stage review (spec compliance then code quality) for high-quality autonomous execution |
+| **Implementation Plans** | Bite-sized task plans with exact file paths, complete code, TDD structure, and verification steps |
+| **Parallel Agent Dispatch** | Independent problems solved concurrently — N problems in time of 1 |
 
 ## Architecture: Three Layers
 
@@ -75,7 +79,11 @@ claude-code-workflow/
 │   ├── verification-before-completion/  # "Run it. Read output. THEN claim done."
 │   ├── systematic-debugging/     # 4-phase debugging protocol
 │   ├── planning-with-files/      # File-based planning for complex tasks
-│   └── experience-evolution/     # Auto-accumulate project knowledge
+│   ├── experience-evolution/     # Auto-accumulate project knowledge
+│   ├── test-driven-development/  # RED-GREEN-REFACTOR cycle
+│   ├── writing-plans/            # Bite-sized implementation plans with TDD structure
+│   ├── subagent-driven-development/  # Fresh subagent per task + two-stage review
+│   └── dispatching-parallel-agents/  # Parallel agent dispatch for independent tasks
 │
 ├── agents/                       # Custom agent definitions
 │   ├── paper-reviewer.md         # Academic paper/thesis review
@@ -233,6 +241,8 @@ This template encodes principles from daily AI-assisted research:
 4. **Layered Loading > Flat Config**: Load rules always, docs on demand, data when needed
 5. **Auto-save > Manual Save**: Session-end triggers automatically — close the window anytime
 6. **Staging > Direct Edit**: Audit LaTeX changes before they hit main.tex
+7. **Test-First > Test-After**: Watch the test fail before writing code — proves the test works
+8. **Subagent Isolation > Context Pollution**: Fresh agent per task, never inherit session history
 
 ## Requirements
 

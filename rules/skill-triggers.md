@@ -26,13 +26,22 @@
   | Using Claude API / Anthropic SDK | claude-api | General programming |
 -->
 
+## Development Workflow Triggers
+
+| Scenario | Skill | NOT when |
+|----------|-------|----------|
+| Multi-step implementation with spec/requirements | writing-plans | User gave step-by-step instructions; single-file change |
+| Executing a plan with independent tasks + subagents available | subagent-driven-development | Tasks are tightly coupled; no subagent support |
+| Implementing any feature or bugfix | test-driven-development | Throwaway prototype; config files; user said skip TDD |
+| 2+ independent failures / tasks with no shared state | dispatching-parallel-agents | Failures are related; agents would edit same files |
+
 ## P1-P2
 
 | Scenario | Action | NOT when |
 |----------|--------|----------|
 | Stuck >15min | experience-evolution | Known issue in patterns.md |
 | 3 consecutive failures | Pause, revert to debugging Phase 1 | Each failure is a different problem |
-| Complex task >5 files | Suggest planning-with-files | User gave step-by-step instructions |
+| Complex task >5 files | Suggest writing-plans | User gave step-by-step instructions |
 
 ## Skill Security Audit
 
