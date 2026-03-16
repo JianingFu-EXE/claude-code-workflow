@@ -12,28 +12,18 @@
 
 ## Research Skill Triggers
 
-<!--
-  Add triggers for your research-specific skills here. Examples:
-
-  | Scenario | Skill | NOT when |
-  |----------|-------|----------|
-  | "Create a mind map" / "structure this" / XMind | xmind | User wants plain text outline |
-  | Working with .md in Obsidian / wikilinks / callouts | obsidian-markdown | Plain markdown outside Obsidian |
-  | "Query NotebookLM" / "ask the notebook" / source-check | notebooklm | Question answerable from local files |
-  | "Find papers" / "search ScienceDirect" / "import to Zotero" | elsevier-zotero-import | Already have the papers |
-  | Paper drafting with XMind structure + NotebookLM + Zotero | paper-manuscript | Simple LaTeX editing |
-  | Literature mapping: XMind -> NotebookLM -> Zotero annotations | paper-atlas | Simple reference lookup |
-  | Using Claude API / Anthropic SDK | claude-api | General programming |
--->
-
-## Development Workflow Triggers
-
 | Scenario | Skill | NOT when |
 |----------|-------|----------|
-| Multi-step implementation with spec/requirements | writing-plans | User gave step-by-step instructions; single-file change |
-| Executing a plan with independent tasks + subagents available | subagent-driven-development | Tasks are tightly coupled; no subagent support |
-| Implementing any feature or bugfix | test-driven-development | Throwaway prototype; config files; user said skip TDD |
-| 2+ independent failures / tasks with no shared state | dispatching-parallel-agents | Failures are related; agents would edit same files |
+| "Create a mind map" / "structure this" / XMind | xmind | User wants plain text outline |
+| Working with .md in Obsidian / wikilinks / callouts | obsidian-markdown | Plain markdown outside Obsidian |
+| Working with .base files / Obsidian database views | obsidian-bases | Regular markdown notes |
+| "Query NotebookLM" / "ask the notebook" / source-check | notebooklm | Question answerable from local files |
+| "Quick question for NotebookLM" + add to XMind | notebook-query | Full literature review needed |
+| "Find papers" / "search ScienceDirect" / "import to Zotero" | elsevier-zotero-import | Already have the papers |
+| Paper drafting with XMind structure + NotebookLM + Zotero | paper-manuscript | Simple LaTeX editing |
+| Literature mapping: XMind outline -> NotebookLM -> Zotero annotations | paper-atlas | Simple reference lookup |
+| Working with .canvas files / visual canvases | json-canvas | Regular markdown |
+| Using Claude API / Anthropic SDK | claude-api | General programming |
 
 ## P1-P2
 
@@ -41,7 +31,7 @@
 |----------|--------|----------|
 | Stuck >15min | experience-evolution | Known issue in patterns.md |
 | 3 consecutive failures | Pause, revert to debugging Phase 1 | Each failure is a different problem |
-| Complex task >5 files | Suggest writing-plans | User gave step-by-step instructions |
+| Complex task >5 files | Suggest planning-with-files | User gave step-by-step instructions |
 
 ## Skill Security Audit
 

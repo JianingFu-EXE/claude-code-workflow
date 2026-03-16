@@ -1,39 +1,60 @@
 # Memory Flush
 
-> Don't rely on user triggers — auto-save. User might close the window at any time.
+> Don't rely on user triggers -- auto-save. User might close the window at any time.
 
 ## Two Write Targets
 
-1. **User-facing**: Daily report in project workspace (`<FN>/{Project}/YYYY-MM-DD Daily Report.md`)
+1. **User-facing**: Daily report in project workspace (`<PROJ>/{Project}/YYYY-MM-DD Daily Report.md`)
    - The user reads these in Obsidian to track progress
    - Written after non-trivial work on a project
 2. **Claude-internal**: `memory/today.md` + `MEMORY.md` + `patterns.md`
    - Claude reads these for session continuity and cross-session learning
    - Updated automatically by the three-layer memory system
 
-## Trigger Conditions
+## Two Flush Levels
+
+### Level 1: Task Complete (after finishing a piece of work)
+
+**Trigger**: Task/work item finished within the session.
+
+**Action**: Update `memory/today.md` only.
+- Append what was done, key decisions, results, blockers
+- Keep it as a running log — multiple entries per session are fine
+- Do NOT write daily reports or update MEMORY.md yet
+
+### Level 2: Call It a Day (end of session)
+
+**Trigger**: Exit signal from user.
+
+**Action**: Full flush — four steps, all mandatory:
+
+1. **Write daily report** in project workspace (`<PROJ>/{Project}/YYYY-MM-DD Daily Report.md`)
+   - Consolidate from today.md entries into a coherent report
+   - Include: what was done, decisions, results/metrics, next steps
+   - Append if report for today already exists
+
+2. **Update long-term memory** (MEMORY.md / patterns.md)
+   - Record new technical lessons, pitfalls, tool configs
+   - Update or remove stale entries
+   - Add cross-project patterns to `patterns.md`
+
+3. **Process Inbox** (`<RESEARCH>/Inbox/`)
+   - Read every file
+   - Add frontmatter (title, date, tags, project)
+   - Append `## Claude's Notes` at the bottom
+   - Move to correct folder (Projects/{Project}/, PAPER_NOTES/, Notes/)
+   - Do NOT modify user's original text
+
+4. **Empty today.md** — clear it after daily report is written. It resets for the next session.
+
+## Other Trigger Conditions
 
 - **Non-trivial task starts** -> Write today.md session header: `### SN (~HH:MM) [project] Working on XXX...`
-- **Task completed on a project** -> Write/append daily report in project workspace + update today.md
-- **Experiment result discovered** -> Write to project daily report (primary) + today.md (internal)
-- **Code commit** -> Note in today.md
-- **Architecture/strategy decision** -> Record in today.md + project daily report
-- **Key literature finding** -> Record in MEMORY.md or patterns.md
-- **Reusable lesson learned** -> Record in patterns.md (cross-project) or MEMORY.md (project-specific)
+- **Key literature finding** -> Record in MEMORY.md or patterns.md (don't wait for exit)
+- **Reusable lesson learned** -> Record in patterns.md immediately
 
-## TEMPORARY_NOTES Processing (End-of-Day)
+## Exit Signals (Execute Level 2 immediately)
 
-On exit signal or when asked, process `<RESEARCH>/TEMPORARY_NOTES/`:
-1. Read every file in the folder
-2. Add frontmatter (title, date, tags, project) — inferred from content
-3. Append `## Claude's Notes` at the bottom with context, links, related info
-4. Move to the correct folder (FLEETING NOTES/{Project}/, PAPER_NOTES/, PERMANENT_NOTES/, DAILY_NOTES/)
-5. Do NOT modify the user's original text — only prepend frontmatter and append at the bottom
-
-## Exit Signals (Execute full Flush immediately)
-
-"That's all for now" / "Done for today" / "I'm heading out" / "Going out" / "Talk later" / "Closing window" -> Immediately run session-end
-
-Session-end includes TEMPORARY_NOTES processing.
+"That's all for now" / "Done for today" / "I'm heading out" / "Going out" / "Talk later" / "Closing window" / "Call it a day" -> Immediately run Level 2
 
 Banned: Waiting for manual save / Batching saves / Assuming user will end normally

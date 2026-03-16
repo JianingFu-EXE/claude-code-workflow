@@ -3,58 +3,60 @@
 ## Experiment Reproducibility Rule
 
 **Every simulation/training run must be traceable.** Before starting:
-- Log: input data config, random seed, key hyperparameters, model version
-- After: record log path, checkpoint path, key metrics
+- Log: wind file, fault config, random seed, reward weights, key hyperparameters
+- After: record TensorBoard path, checkpoint path, key metrics
 
 **Never overwrite results.** Version with date suffix or commit hash.
 Violating this = lost weeks of compute. **No exceptions.**
+
+**Never delete files unless explicitly asked.** Even tiny files (e.g. 88-byte TB events) may belong to an active process. Do not assume files are stale, spurious, or safe to remove. If a file looks suspicious, ask the user — do not delete it.
 
 ## Research Vault Structure
 
 The Obsidian Research vault at `<RESEARCH>` follows a note lifecycle:
 
 ```
-TEMPORARY_NOTES/   <-- User drops raw notes here. No frontmatter, no sorting.
-FLEETING NOTES/    <-- Project workspaces. Sorted, structured notes.
-PERMANENT_NOTES/   <-- Mature, reusable knowledge.
+Inbox/             <-- User drops raw notes here. No frontmatter, no sorting.
+Projects/          <-- Project workspaces (Meta-RL-FTC, DSAC-WWC, RL-GFM, Thesis, OE-Paper).
+Notes/             <-- Mature, reusable knowledge (200+ concept notes).
 PAPER_NOTES/       <-- Literature notes on specific papers.
-DAILY_NOTES/       <-- Date-stamped daily logs.
 ASSETS/            <-- Images, diagrams, attachments.
+DUE/               <-- Deadlines and submissions.
 ```
 
-## TEMPORARY_NOTES Inbox Rule
+## Inbox Rule
 
-**The user writes raw notes in `<RESEARCH>/TEMPORARY_NOTES/`.** These are quick captures — no frontmatter, no structure, just ideas.
+**The user writes raw notes in `<RESEARCH>/Inbox/`.** These are quick captures -- no frontmatter, no structure, just ideas.
 
 **Claude's job at end-of-day (or when asked):**
-1. Read every file in `TEMPORARY_NOTES/`
+1. Read every file in `Inbox/`
 2. For each note:
    a. **Add frontmatter**: title, date, tags (inferred from content), project (if identifiable)
-   b. **Add Claude's comments** at the bottom under a `## Claude's Notes` section — context, related links, important information, connections to ongoing work
+   b. **Add Claude's comments** at the bottom under a `## Claude's Notes` section -- context, related links, important information, connections to ongoing work
    c. **Move to the proper location**:
-      - Project-related -> `FLEETING NOTES/{Project}/`
+      - Project-related -> `Projects/{Project}/`
       - Literature/paper note -> `PAPER_NOTES/`
-      - General idea/knowledge -> `PERMANENT_NOTES/` (if mature) or leave in `FLEETING NOTES/`
-      - Daily log content -> `DAILY_NOTES/`
-3. `TEMPORARY_NOTES/` should be empty after processing
+      - General idea/knowledge -> `Notes/` (if mature) or leave in `Projects/`
+      - Daily log content -> project workspace daily report
+3. `Inbox/` should be empty after processing
 
 **Do NOT modify the user's original text.** Only prepend frontmatter and append Claude's section at the bottom.
 
 ## Per-Project Workspace Rule
 
-Each project lives in `<FN>/{Project}/` (see CLAUDE.md for full paths). A project workspace contains:
-- **Code**: in `<CODE>/` repos
-- **XMind**: structural blueprints (.xmind files) — Claude reads these as writing instructions
+Each project lives in `<PROJ>/{Project}/` (see CLAUDE.md for full paths). A project workspace contains:
+- **Code**: in `<CODE>/` repos (MATLAB + Python)
+- **XMind**: structural blueprints (.xmind files) -- Claude reads these as writing instructions
 - **Overleaf**: paper LaTeX (git-synced subfolder)
-- **Reference notebook**: sources uploaded to the project's NotebookLM — Claude queries these for truth
-- **Daily reports**: Obsidian .md notes — Claude writes these here for the user to track progress
+- **NotebookLM**: references uploaded to the project's notebook -- Claude queries these for truth
+- **Daily reports**: Obsidian .md notes -- Claude writes these here for the user to track progress
 
 **Daily reports go in the project workspace, NOT in `~/.claude/memory/today.md`.** The `today.md` is Claude's internal session scratchpad. The user tracks progress via daily reports in each project's folder.
 
 ## Documentation Structure
 
-- Project-level: Obsidian notes in `<FN>/{Project}/` workspace
-- Thesis-level: `AGENTS.md` or similar guide in thesis vault
+- Project-level: Obsidian notes in `<PROJ>/{Project}/` workspace
+- Thesis-level: `AGENTS.md` in PHD vault (workspace guide)
 - Status SSOT: cross-project -> `memory/projects.md`
 
 ## XMind-as-Instruction Rule (CORE WORKFLOW)
@@ -76,7 +78,7 @@ The workflow is always: **User builds structure in XMind -> Claude reads XMind -
 4. **Never contradict the XMind structure** without flagging the deviation and getting confirmation
 
 ### When the user asks Claude to create an XMind:
-- Follow consistency rules: layout, markers, labels, notes on every section-level topic
+- Follow the XMind Consistency Rules in PHD vault `AGENTS.md`
 - The XMind becomes the SSOT for that document's structure going forward
 
 ### Writing output grounded in XMind:
@@ -89,7 +91,10 @@ The workflow is always: **User builds structure in XMind -> Claude reads XMind -
 
 **After non-trivial work on a project, write a daily report in the project workspace.**
 
-- **Where**: `<FN>/{Project}/` as an Obsidian .md file, named `YYYY-MM-DD Daily Report.md`
+- **Where**: `<PROJ>/{Project}/` as an Obsidian .md file
+  - Meta-RL: `<PROJ>/Meta-RL-FTC/Meta-IPC/YYYY-MM-DD Daily Report.md`
+  - DSAC: `<PROJ>/DSAC-WWC/YYYY-MM-DD Daily Report.md`
+  - Thesis: `<PROJ>/Thesis/YYYY-MM-DD Daily Report.md`
 - **When**: After each significant task, experiment analysis, or writing session
 - **Format**: Obsidian markdown with frontmatter (date, tags, project)
 - **Content**: What was done, key decisions, results/metrics, next steps
@@ -132,18 +137,23 @@ This is how the user tracks progress. Claude also updates `memory/today.md` inte
 
 **Do NOT skip the staging step.** Even single-sentence additions go through `temporary.tex`.
 
-## Paper Writing Truth Rule (Source-Grounded)
+## Paper Writing Truth Rule (NotebookLM-Grounded)
 
-**All paper/thesis writing MUST be grounded in verifiable sources.**
+**All paper/thesis writing MUST be grounded in the project's NotebookLM notebook.**
 
 When writing any paper section or thesis chapter:
-1. **Query the project's reference notebook** (e.g. NotebookLM) for source-grounded content before writing claims
+1. **Query the project's NotebookLM** for source-grounded content before writing claims
 2. **Every technical claim** must trace to either:
-   - Verified source (cite the paper from the reference notebook's response)
-   - Own experiment results (with specific run reference)
+   - NotebookLM-verified source (cite the paper from NotebookLM's response)
+   - Own simulation results (with specific run reference)
    - Mathematical derivation (shown explicitly)
-3. **If a claim cannot be verified**: flag it as `[UNVERIFIED: need source]` — do NOT silently include it
-4. **Citation keys** must match reference manager entries — cross-check after verification
+3. **If NotebookLM cannot verify a claim**: flag it as `\first{[UNVERIFIED: need source]}` -- do NOT silently include it
+4. **Citation keys** must match Zotero entries -- cross-check after NotebookLM provides the reference
+
+NotebookLM URLs per project (see CLAUDE.md for full list):
+- P2 DSAC: `9cfddb8e-...`
+- P3 Meta-RL: `a234fe16-...`
+- Thesis examples: `27e615ab-...`
 
 ## Task Routing & Auto Model Selection
 
@@ -151,29 +161,29 @@ When writing any paper section or thesis chapter:
 
 Before executing a task, classify it and dispatch accordingly. Use the Agent tool with the appropriate model tier for subagent work.
 
-### Opus (main session) — complex reasoning, stay in main context
+### Opus (main session) -- complex reasoning, stay in main context
 Use for:
-- Core algorithm design or modification
-- Architecture decisions with cascading impact
+- Reward function design or modification
+- Meta-RL architecture decisions (encoder, latent dim, loss functions)
 - Thesis argument structure and contribution framing
 - Literature synthesis and gap identification
-- Simulation model changes
+- Simulink model changes
 - Multi-step debugging requiring deep project context
-- Paper writing that requires reference notebook + XMind reading
+- Paper writing that requires NotebookLM interaction + XMind reading
 - Any task that needs cross-project knowledge or memory
 
-### Sonnet (subagent) — capable daily work, delegate via Agent tool
+### Sonnet (subagent) -- capable daily work, delegate via Agent tool
 Dispatch subagent with `sonnet` for:
 - Paper section drafting (when XMind + instructions are clear)
-- Code review and refactoring (non-critical)
-- Experiment log analysis and report generation
+- Code review and refactoring (Python/MATLAB, non-critical)
+- TensorBoard log analysis and report generation
 - Obsidian note writing (daily reports, experiment logs)
 - XMind mind map creation (following established rules)
 - Literature search result summarisation
 - Experiment configuration review
-- TEMPORARY_NOTES processing (frontmatter + sorting)
+- Inbox processing (frontmatter + sorting)
 
-### Haiku (subagent) — quick tasks, minimal tokens
+### Haiku (subagent) -- quick tasks, minimal tokens
 Dispatch subagent with `haiku` for:
 - Citation formatting and .bib fixes
 - Typo/grammar corrections in LaTeX or markdown
@@ -196,34 +206,32 @@ Dispatch subagent with `haiku` for:
 ## Debugging Protocol
 
 No blind fixes. Four phases:
-1. **Root Cause** — Read errors, reproduce, trace data flow
-2. **Pattern Analysis** — Find working example, compare
-3. **Hypothesis Testing** — Change one variable at a time
-4. **Fix & Verify** — Test before fix, verify no regression
+1. **Root Cause** -- Read errors, reproduce, trace data flow
+2. **Pattern Analysis** -- Find working example, compare
+3. **Hypothesis Testing** -- Change one variable at a time
+4. **Fix & Verify** -- Test before fix, verify no regression
 
 3 consecutive failures -> stop and reassess
 
-<!--
-  Add domain-specific debugging hints here. Examples:
+### MATLAB/Simulink-Specific
+- Check signal dimensions first (most common Simulink error)
+- Check normalization references are consistent across reward.m and normalize_inputs.m
+- Check fault mode indexing (blade 1 has 7 modes, blades 2/3 have 4)
 
-  ### MATLAB/Simulink-Specific
-  - Check signal dimensions first (most common Simulink error)
-  - Check normalization references are consistent across files
-
-  ### Python ML-Specific
-  - Check device (CPU/GPU) consistency in tensors
-  - Check data loader sampling (cross-boundary contamination)
-  - Check encoder input dimensions after feature changes
--->
+### Python RL-Specific
+- Check device (CPU/GPU) consistency in tensors
+- Check replay buffer sampling (cross-boundary contamination)
+- Check context encoder input dimensions after obs_index changes
+- Verify z is actually being updated during rollouts (not frozen at zero)
 
 ## Quality Control + AI Content Safety
 
 **Core triggers**:
 - Processing external URLs / citing others -> must annotate source, warn if unverifiable
-- Paper claims -> must be source-grounded (paper text, experiment data, or reference notebook)
+- Paper claims -> must be source-grounded (paper text, simulation data, or NotebookLM)
 - >20 conversation turns / >50 tool calls -> suggest fresh session
 - Discovered error/hallucination -> immediately isolate context, don't write to memory
-- Literature claims -> cross-check with reference notebook when possible
+- Literature claims -> cross-check with NotebookLM when possible
 
 ## Real-time Experience Recording (Mandatory)
 
@@ -239,23 +247,21 @@ No blind fixes. Four phases:
 ## Memory Search Rules
 
 - When encountering an error, check MEMORY.md and patterns.md first
-- When starting work on a project, read the project's notes for context
+- When starting work on a project, read the project's Obsidian notes for context
 - Code search: locate directory first, then precise search
 
 ## Project Context Auto-detection
 
-<!--
-  When conversation involves a specific project, load from its workspace.
-  Map keywords to project paths. Example:
-
-  - project-1 / keyword-a / keyword-b -> workspace: `<FN>/Project-1/`, code: `<CODE>/project-1/`
-  - project-2 / keyword-c / keyword-d -> workspace: `<FN>/Project-2/`
-  - thesis / chapter / dissertation -> `<PHD>/OverLeaf/`
--->
+When conversation involves a specific project, load from its workspace:
+- Meta-RL / PEARL / FTC / IPC -> workspace: `<PROJ>/Meta-RL-FTC/`, code: `<CODE>/Meta/`
+- DSAC / distributional / WWC / TSTE -> workspace: `<PROJ>/DSAC-WWC/`
+- PINN / HJB / TMD / Ocean Engineering -> workspace: `<PROJ>/OE-Paper/`, paper: `<PHD>/Papers/OE_PINN_RV3/`
+- RL-GFM / grid-forming / GFM-RL / converter -> workspace: `<PROJ>/RL-GFM/`, code: `<CODE>/GFM-RL/`
+- thesis / chapter / dissertation -> `<PHD>/OverLeaf/` + `<PHD>/AGENTS.md`
 
 When loading a project context, also note:
 - The project's XMind files (for structural reference)
-- The project's reference notebook URL (for source-grounded queries)
+- The project's NotebookLM URL (for source-grounded queries)
 - The project's recent daily reports (for progress context)
 
 ## Parallel Processing
@@ -273,9 +279,9 @@ Banned: mixed changes, meaningless messages, >100 lines without splitting.
 
 | Fetch scenario | Write-back target | Fields |
 |---------------|-------------------|--------|
-| Experiment metrics | Project workspace daily report | Epoch, key metrics |
-| Simulation results | Project workspace daily report | Performance stats |
-| Literature findings | Reference manager + notebook | Citations, key claims |
+| TensorBoard metrics | Project workspace daily report | Epoch, reward, KL, alpha |
+| Simulation results | Project workspace daily report | Load reduction %, pitch stats |
+| Literature findings | Zotero + NotebookLM | Citations, key claims |
 | Reusable technical lesson | `MEMORY.md` (auto memory) | Pattern + context |
 | Cross-project pattern | `patterns.md` | Lesson + example |
 | Session progress (internal) | `memory/today.md` | What was done, next steps |

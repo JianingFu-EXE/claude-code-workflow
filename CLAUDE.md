@@ -1,4 +1,4 @@
-# Research Workflow Template — Claude Code Global Memory
+# PhD Research Workflow -- Claude Code Global Memory
 
 > Auto-loaded = rules/ (behaviors.md, skill-triggers.md, memory-flush.md)
 > On-demand = docs/ (agents.md, content-safety.md, task-routing.md, ...)
@@ -8,92 +8,95 @@
 
 ## User Info
 
-- **Name**: YOUR_NAME | **University**: YOUR_UNIVERSITY
-- **Identity**: [Your role, e.g. "PhD student — reinforcement learning for robotics"]
-- **Supervisor**: [Supervisor name]
-- **Thesis**: "[Your thesis title]"
-- **Languages**: [e.g. "MATLAB/Simulink (plant model), Python (training), C++ (firmware)"]
-- **Philosophy**: [e.g. "Rigorous experimentation + systematic paper-to-thesis pipeline"]
-- **Core pattern**: XMind first, then write. XMind mind maps are the structural blueprint — Claude reads them as instructions to produce LaTeX, Obsidian notes, or any written output.
+- **Name**: Jianing Fu | **University**: University of Exeter (Renewable Energy - Cornwall)
+- **Identity**: PhD student -- intelligent control of wind turbines (RL, meta-RL, PINN-based control)
+- **Supervisor**: Dr. Shuyue Lin
+- **Thesis**: "Intelligent load mitigation control of offshore wind turbines"
+- **Languages**: MATLAB/Simulink (plant model, OpenFAST), Python (RL training, PEARL/SAC)
+- **Philosophy**: Rigorous experimentation + systematic paper-to-thesis pipeline
+- **Core pattern**: XMind first, then write. XMind mind maps are the structural blueprint -- Claude reads them as instructions to produce LaTeX, Obsidian notes, or any written output.
 
 ### Platform & Tool Stack
 
-<!--
-  Customize this table with the tools you actually use.
-  Remove rows you don't need, add your own.
--->
-
 | Tool | Purpose | Location |
 |------|---------|----------|
-| Obsidian | Daily progress, research notes, mind maps | [Your vault path] |
+| Obsidian | Daily progress, research notes, mind maps | OneDrive PHD vault |
 | Overleaf | Thesis + paper drafting (git-synced) | See project paths below |
-| Zotero | Reference management | [Zotero library ID or path] |
+| Zotero | Reference management (cloud, ID 9312542) | See elsevier-zotero-import skill config |
 | NotebookLM | Source-grounded literature Q&A | See notebook URLs below |
-| XMind | **Structural blueprint for all writing** — Claude reads .xmind as instructions | `MindMap/` in vault |
+| XMind | **Structural blueprint for all writing** -- Claude reads .xmind as instructions | `MindMap/` in PHD vault |
+| OpenFAST | Aeroelastic wind turbine simulation | Simulink S-Function |
+| TurbSim | Turbulent wind field generation | `.bts` files |
 
 ### Key Paths
 
-<!--
-  Define shorthands so rules/behaviors.md can reference paths concisely.
-  Replace these with your actual paths.
--->
+| Shorthand | macOS | Windows |
+|-----------|-------|---------|
+| `<PHD>` | `/Users/jn/Library/CloudStorage/OneDrive-UniversityofExeter/Obsidian/PHD` | `C:\Users\jf844\OneDrive - University of Exeter\Obsidian\PHD` |
+| `<RESEARCH>` | `/Users/jn/Library/CloudStorage/OneDrive-UniversityofExeter/Obsidian/Research` | `C:\Users\jf844\OneDrive - University of Exeter\Obsidian\Research` |
+| `<PROJ>` | `<RESEARCH>/Projects` | `<RESEARCH>\Projects` |
+| `<INBOX>` | `<RESEARCH>/Inbox` | `<RESEARCH>\Inbox` |
+| `<CODE>` | `/Users/jn/Github` | `C:\Users\jf844` |
+| `<PYTHON>` | _(not used on Mac)_ | `C:\Users\jf844\AppData\Local\anaconda3\envs\DSAC\python.exe` |
+| `<TB>` | _(not used on Mac)_ | `C:\Users\jf844\Meta\TensorBoard` |
 
-| Shorthand | Path |
-|-----------|------|
-| `<PHD>` | `/path/to/your/phd/vault` |
-| `<RESEARCH>` | `/path/to/your/research/vault` |
-| `<FN>` | `<RESEARCH>/FLEETING NOTES` |
-| `<TEMP>` | `<RESEARCH>/TEMPORARY_NOTES` |
-| `<CODE>` | `/path/to/your/code/repos` |
+> Claude: detect the current platform from the environment and use the matching column.
 
 ### Research Vault Structure
 
-<!--
-  This is an Obsidian Zettelkasten-style vault.
-  Adjust folder names to match your setup.
--->
-
 ```
 <RESEARCH>/
-  TEMPORARY_NOTES/   <-- User's inbox. Raw notes, no frontmatter. Claude sorts at end-of-day.
-  FLEETING NOTES/    <-- Project workspaces (one folder per project)
-  PERMANENT_NOTES/   <-- Mature, reusable knowledge
+  Inbox/             <-- User's inbox. Raw notes, no frontmatter. Claude sorts at end-of-day.
+  Projects/          <-- Project workspaces (Meta-RL-FTC, DSAC-WWC, RL-GFM, Thesis, OE-Paper)
+  Notes/             <-- Mature, reusable knowledge (200+ concept notes)
   PAPER_NOTES/       <-- Literature notes on specific papers
-  DAILY_NOTES/       <-- Date-stamped daily logs
   ASSETS/            <-- Images, diagrams
+  DUE/               <-- Deadlines and submissions
 ```
 
 ---
 
-## Projects — Per-Project Workspace Map
+## Projects -- Per-Project Workspace Map
 
-Each project is a self-contained workspace. All its artefacts (code, XMind, Overleaf, notes, daily reports) live together under `<FN>/{Project}/`. Claude writes daily reports there and reads XMind from there.
+Each project is a self-contained workspace. All its artefacts (code, XMind, Overleaf, notes, daily reports) live together under `<PROJ>/{Project}/`. Claude writes daily reports there and reads XMind from there.
 
-<!--
-  Replace these examples with your actual projects.
-  Each project should list: status, workspace path, code path, overleaf path,
-  XMind files, NotebookLM URL, and daily report location.
--->
+### Project 1: PINN-HJB Active Structural Control (PUBLISHED)
+- **Status**: Published in Ocean Engineering | **Thesis chapter**: Ch 3
+- **Workspace**: `<PROJ>/OE-Paper/`
+- **Paper LaTeX**: `<PHD>/Papers/OE_PINN_RV3/`
+- **XMind**: `<RESEARCH>/Notes/Wind Turbine Active TMD Model Free Controller.xmind`, `<RESEARCH>/Notes/Model-free PINN Optimal with Pareto Front.xmind`
+- **NotebookLM source**: `1-s2.0-S0029801825035966-main`
 
-### Project 1: [Your First Project] (STATUS)
-- **Status**: [e.g. Published / Under review / Active] | **Thesis chapter**: Ch N
-- **Workspace**: `<FN>/Project-1-Name/`
-- **Code**: `<CODE>/project-1/`
-- **Overleaf**: `<FN>/Project-1-Name/overleaf/`
-- **XMind**: `<FN>/Project-1-Name/Structure.xmind`
-- **NotebookLM**: `https://notebooklm.google.com/notebook/YOUR_NOTEBOOK_ID`
-- **Daily reports**: write to `<FN>/Project-1-Name/`
+### Project 2: DSAC-WWC -- Distributional RL for FOWT (UNDER REVIEW)
+- **Status**: Under review at IEEE Trans. Sustainable Energy | **Thesis chapter**: Ch 4
+- **Workspace**: `<PROJ>/DSAC-WWC/`
+- **Paper LaTeX**: `<PHD>/Papers/_TSTE_DSAC/`
+- **XMind**: `<PROJ>/DSAC-WWC/DSAC-WWC.xmind`
+- **NotebookLM**: `https://notebooklm.google.com/notebook/9cfddb8e-0d57-4a0b-b66f-4495054daa6a`
+- **Daily reports**: write to `<PROJ>/DSAC-WWC/`
 
-### Project 2: [Your Second Project] (STATUS)
-- **Status**: [status] | **Thesis chapter**: Ch N
-- **Workspace**: `<FN>/Project-2-Name/`
-- ...
+### Project 3: Meta-RL for Fault-Tolerant IPC (ACTIVE)
+- **Status**: Experiments + paper drafting | **Thesis chapter**: Ch 5
+- **Workspace**: `<PROJ>/Meta-RL-FTC/`
+- **Code**: `<CODE>/Meta/` (Python PEARL+SAC in `rlkit-simulink/`, MATLAB in `Meta-IPC/`)
+- **Overleaf**: `<PROJ>/Meta-RL-FTC/overleaf/`
+- **XMind**: `<PROJ>/Meta-RL-FTC/overleaf/Structure.xmind`, `MetaFTC.xmind`, `intro_references.xmind`
+- **Research notes**: `<PROJ>/Meta-RL-FTC/Meta-IPC/` (Architecture, Critical Path, TB reports, etc.)
+- **NotebookLM**: `https://notebooklm.google.com/notebook/a234fe16-3293-4066-bccd-c341435ad381`
+- **Daily reports**: write to `<PROJ>/Meta-RL-FTC/Meta-IPC/`
+- **Critical path**: `<PROJ>/Meta-RL-FTC/Meta-IPC/Critical Path.md`
+
+### Project 4: RL-GFM (EARLY — DESIGN PHASE)
+- **Workspace**: `<PROJ>/RL-GFM/`
+- **Code**: `<CODE>/GFM-RL/`
+- **XMind**: `<PROJ>/RL-GFM/Hybrid GFM-GFCfor FOWTs.xmind`, `Paper Review - RL-Tuned GFM-GFL Weighting for FOWTs.xmind`
 
 ### Thesis
-- **Workspace**: `<FN>/Thesis/` + `<PHD>/OverLeaf/`
+- **Workspace**: `<PROJ>/Thesis/` + `<PHD>/OverLeaf/`
 - **Overleaf**: `<PHD>/OverLeaf/Thesis.tex`
-- **Structure**: [Your chapter mapping, e.g. Ch1 Intro, Ch2 Lit Review, Ch3-5 Projects, Ch6 Conclusion]
-- **Mind maps**: `<PHD>/MindMap/`
+- **Structure**: Ch1 Intro, Ch2 Lit Review, Ch3 PINN-HJB, Ch4 DSAC, Ch5 Meta-RL, Ch6 TBD, Ch7 Conclusion
+- **Mind maps**: `<PHD>/MindMap/` (thesis-level), `<PHD>/MindMap/DissertationAnalysis/` (reference analysis)
+- **Thesis NotebookLM** (examples): `https://notebooklm.google.com/notebook/27e615ab-dbca-445f-a29e-75306930d47a`
 
 ---
 
@@ -101,16 +104,21 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 
 - **Truth > Speed**: Never claim completion without verification evidence
 - **Small Batch**: <=15 files or <=400 lines net change per commit
-- **No Secrets**: Never commit API keys/tokens (Zotero, Overleaf credentials, etc.)
-- **Reproducibility**: Every experiment must log hyperparameters, random seeds, input data config
+- **No Secrets**: Never commit API keys/tokens (Zotero, Elsevier, Overleaf credentials)
+- **Reproducibility**: Every experiment must log hyperparameters, random seeds, wind file, fault config
 - **Self-verify**: Run lint/build/test before declaring done, read output to confirm PASS
 - **Banned phrases**: "I fixed it, you try" / "Should be fine" / "Probably passes" / "Theoretically correct"
 
 ### LaTeX Standards
-- Preserve Overleaf sync compatibility — no destructive renames
-- Use consistent citation style (e.g. `authoryear` with biblatex + biber)
+- Preserve Overleaf sync compatibility -- no destructive renames
+- Use `authoryear` citation style (biblatex, biber backend)
 - Keep technical claims source-grounded (paper text, references, or NotebookLM)
 - Do not invent references, results, or experimental details
+
+### MATLAB/Python Standards
+- Never overwrite simulation results without versioning
+- Always document: wind file, fault config, training epochs, reward weights
+- Signal naming follows OpenFAST conventions (e.g., `RootMxc1`, `RotSpeed`, `BldPitch1`)
 
 ### Handoff Checklist (before session-end)
 
@@ -130,19 +138,19 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 
 ## Collaboration Preferences
 
-- Act as advisor, devil's advocate, mirror — proactively point out blind spots, never be a yes-man
+- Act as advisor, devil's advocate, mirror -- proactively point out blind spots, never be a yes-man
 - **Auto-execute**: Bug fixes, <=100 line refactors, Obsidian note creation, XMind generation
 - **Auto-intercept**:
   * **New experiment** -> Ask: "What is the hypothesis? What are the controls?"
   * **Paper claim without evidence** -> Flag immediately
 - **Require confirmation (stop and check in)**:
-  * Reward/loss function changes (affects all training)
-  * Simulation model modifications
+  * Reward function changes (affects all training)
+  * Simulink model modifications
   * Overleaf structural changes (chapter reordering, section deletion)
-  * Training hyperparameter changes
+  * Training hyperparameter changes (beta, alpha, latent_dim, learning rates)
   * Thesis structure decisions
   * Literature claims to be cited
-- **Never self-decide**: Delete experiment data, push to Overleaf, modify simulation models
+- **Never self-decide**: Delete experiment data, push to Overleaf, modify MATLAB plant models
 - **Banned**: "Is this OK?" / "Should I pick A or B?" / "Should I continue?"
 - **No filler intros**: Go straight to the answer or start working
 
@@ -162,17 +170,19 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 
 | Info Type | SSOT File | Do NOT write to |
 |-----------|-----------|-----------------|
-| Daily reports (per-project) | `<FN>/{Project}/` workspace (Obsidian .md) | today.md, MEMORY.md |
+| Daily reports (per-project) | `<PROJ>/{Project}/` workspace (Obsidian .md) | today.md, MEMORY.md |
 | Cross-project overview | `memory/projects.md` | (summary + pointers only) |
 | Technical pitfalls | `MEMORY.md` (per-project auto memory) | today.md |
 | Session-level progress | `memory/today.md` | (temp layer, archived next day) |
 | In-flight task registry | `memory/active-tasks.json` | (cross-session task status) |
-| Experiment results | Project workspace daily reports | MEMORY.md |
+| Experiment results + TB reports | Project workspace daily reports | MEMORY.md |
 | Paper/thesis structure | XMind maps in project workspace (authoritative) | Plain text notes |
 | Paper LaTeX source | Overleaf repo in project workspace | Duplicate elsewhere |
-| Reference notebook | Per-project NotebookLM (see URLs above) | Don't duplicate content |
-| Code | `<CODE>/` repos | Obsidian notes |
-| Raw notes inbox | `<TEMP>/` — user writes here, Claude sorts at end-of-day | Modify user text |
+| NotebookLM references | Per-project notebook (see URLs above) | Don't duplicate content |
+| Zotero/NotebookLM config | PHD vault `AGENTS.md` | Duplicate elsewhere |
+| Code | `<CODE>/` repos (MATLAB + Python) | Obsidian notes |
+| Raw notes inbox | `<INBOX>/` -- user writes here, Claude sorts at end-of-day | Modify user text |
+| Key data points | `MEMORY.md` (Key Data Points section) | today.md |
 
 ---
 
@@ -187,17 +197,14 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 
 ### Sub-project Memory Routes
 
-<!--
-  Map keywords to the right MEMORY.md for each project.
-  Replace with your actual project keywords and paths.
+> Claude: use the path matching the current platform (detect from environment).
 
-  | Keywords | Memory path |
-  |----------|-------------|
-  | project-1/keyword-a/keyword-b | `~/.claude/projects/-path-to-project-1/memory/MEMORY.md` |
-  | project-2/keyword-c/keyword-d | `~/.claude/projects/-path-to-project-2/memory/MEMORY.md` |
--->
-
-Routes determine write targets. Unlisted projects share the main MEMORY.md.
+| Keywords | macOS memory path | Windows memory path |
+|----------|-------------------|---------------------|
+| thesis/chapter/overleaf/dissertation | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-PHD/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-PHD/memory/MEMORY.md` |
+| meta-rl/PEARL/FTC/fault/IPC/Meta-IPC | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-Research/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-Research/memory/MEMORY.md` |
+| PINN/HJB/Ocean Engineering/active TMD | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-PHD/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-PHD/memory/MEMORY.md` |
+| DSAC/distributional/TSTE/WWC | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-PHD/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-PHD/memory/MEMORY.md` |
 
 ---
 
@@ -216,4 +223,4 @@ Routes determine write targets. Unlisted projects share the main MEMORY.md.
 
 ---
 
-*Last updated: YYYY-MM-DD*
+*Last updated: 2026-03-16*
