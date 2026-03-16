@@ -2,7 +2,7 @@
 
 > Auto-loaded = rules/ (behaviors.md, skill-triggers.md, memory-flush.md)
 > On-demand = docs/ (agents.md, content-safety.md, task-routing.md, ...)
-> Hot data layer = memory/today.md + memory/active-tasks.json
+> Hot data layer = memory/today.md + memory/active-tasks.json (cloud-synced via OneDrive symlinks)
 
 ---
 
@@ -173,8 +173,8 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 | Daily reports (per-project) | `<PROJ>/{Project}/` workspace (Obsidian .md) | today.md, MEMORY.md |
 | Cross-project overview | `memory/projects.md` | (summary + pointers only) |
 | Technical pitfalls | `MEMORY.md` (per-project auto memory) | today.md |
-| Session-level progress | `memory/today.md` | (temp layer, archived next day) |
-| In-flight task registry | `memory/active-tasks.json` | (cross-session task status) |
+| Session-level progress | `memory/today.md` → `<RESEARCH>/today.md` (cloud-synced) | (running log, cleared on Level 2 flush) |
+| In-flight task registry | `memory/active-tasks.json` → `<RESEARCH>/active-tasks.json` (cloud-synced) | (cross-session, cross-device task status) |
 | Experiment results + TB reports | Project workspace daily reports | MEMORY.md |
 | Paper/thesis structure | XMind maps in project workspace (authoritative) | Plain text notes |
 | Paper LaTeX source | Overleaf repo in project workspace | Duplicate elsewhere |

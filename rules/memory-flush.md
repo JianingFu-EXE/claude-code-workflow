@@ -7,9 +7,10 @@
 1. **User-facing**: Daily report in project workspace (`<PROJ>/{Project}/YYYY-MM-DD Daily Report.md`)
    - The user reads these in Obsidian to track progress
    - Written after non-trivial work on a project
-2. **Claude-internal**: `memory/today.md` + `MEMORY.md` + `patterns.md`
+2. **Claude-internal**: `memory/today.md` + `memory/active-tasks.json` + `MEMORY.md` + `patterns.md`
    - Claude reads these for session continuity and cross-session learning
-   - Updated automatically by the three-layer memory system
+   - `today.md` and `active-tasks.json` are **cloud-synced** (symlinked to `<RESEARCH>/today.md` and `<RESEARCH>/active-tasks.json` via OneDrive) — both devices read/write the same files
+   - Updated automatically by the two-level flush system
 
 ## Two Flush Levels
 
