@@ -259,10 +259,13 @@ When conversation involves a specific project, load from its workspace:
 - RL-GFM / grid-forming / GFM-RL / converter -> workspace: `<PROJ>/RL-GFM/`, code: `<CODE>/GFM-RL/`
 - thesis / chapter / dissertation -> `<PHD>/OverLeaf/` + `<PHD>/AGENTS.md`
 
-When loading a project context, also note:
-- The project's XMind files (for structural reference)
-- The project's NotebookLM URL (for source-grounded queries)
-- The project's recent daily reports (for progress context)
+When loading a project context, also:
+- Read the project's XMind files (for structural reference)
+- Note the project's NotebookLM URL (for source-grounded queries)
+- Check the project's recent daily reports (for progress context)
+- **If a Critical Path exists**: read it and flag open blockers to the user before starting work
+  - Meta-RL: `<PROJ>/Meta-RL-FTC/Meta-IPC/Critical Path.md` (has open issues 1-6)
+  - Other projects: check for `Critical Path.md` or `TODO.md` in workspace root
 
 ## Parallel Processing
 
