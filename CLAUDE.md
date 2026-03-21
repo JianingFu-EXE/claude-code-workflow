@@ -43,16 +43,7 @@
 > Claude: detect the current platform from the environment and use the matching column.
 
 ### Research Vault Structure
-
-```
-<RESEARCH>/
-  Inbox/             <-- User's inbox. Raw notes, no frontmatter. Claude sorts at end-of-day.
-  Projects/          <-- Project workspaces (Meta-RL-FTC, DSAC-WWC, RL-GFM, Thesis, OE-Paper)
-  Notes/             <-- Mature, reusable knowledge (200+ concept notes)
-  PAPER_NOTES/       <-- Literature notes on specific papers
-  ASSETS/            <-- Images, diagrams
-  DUE/               <-- Deadlines and submissions
-```
+> See rules/behaviors.md § Research Vault Structure
 
 ---
 
@@ -157,12 +148,7 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 ---
 
 ## Experience Recall & Evolution
-
-**Mandatory triggers (check every turn)**:
-- Encountering Bug/Error/Stuck -> First step: check memory files for related patterns
-- Corrected by user -> Immediately record lesson in MEMORY.md
-- Starting new task -> Check patterns.md for related pitfalls
-- If executed >8 tools on a complex task -> REFLECT and record learning
+> See rules/behaviors.md § Real-time Experience Recording + Memory Search Rules
 
 ---
 
@@ -220,7 +206,14 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 | Behavior reference details | `Read docs/behaviors-reference.md` |
 | Cross-day goals/todos | `Read memory/goals.md` |
 | Pattern library | `Read patterns.md` |
+| Debugging (7 investigation techniques) | `Read docs/behaviors-reference.md § Investigation Techniques` |
+| Experiment iteration loop | `Read docs/agents.md § Constraint-Driven Experiment Loop` |
+| Multi-persona paper review | `Read docs/agents.md § Multi-Persona Review` |
+| Debugging command | `/debug` |
+| Paper/thesis review | `/review` |
+| Research direction challenge | `/exploration` |
+| TensorBoard report | `/tb-report` |
 
 ---
 
-*Last updated: 2026-03-16*
+*Last updated: 2026-03-21*

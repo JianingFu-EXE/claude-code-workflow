@@ -4,52 +4,52 @@
 
 ## Principle
 
-**Use the cheapest model that can do the job.** Opus is expensive reasoning capacity — don't burn it on formatting fixes. Dispatch subagents via the Agent tool for independent work.
+**Use the cheapest model that can do the job.** Opus is $200/month of reasoning capacity -- don't burn it on formatting fixes. Dispatch subagents via the Agent tool for independent work.
 
 ## Model Tier Table
 
-### Opus — Stay in Main Session
+### Opus -- Stay in Main Session
 
 Reserved for tasks requiring deep reasoning, memory access, cross-project context, or user interaction.
 
 | Task | Why Opus |
 |------|----------|
-| Algorithm/model design | Needs literature knowledge + experiment context |
-| Architecture decisions | Cascading impact, needs full project understanding |
-| Thesis contribution framing | Cross-references all projects |
+| Reward function design | Needs literature knowledge + experiment context |
+| Meta-RL architecture decisions | Cascading impact, needs full project understanding |
+| Thesis contribution framing | Cross-references all 3 projects |
 | Literature synthesis / gap analysis | Requires reasoning across multiple sources |
-| Simulation model changes | Complex routing, high-stakes |
+| Simulink model changes | Complex signal routing, high-stakes |
 | Multi-step debugging (stuck >3 attempts) | Needs memory + pattern recall |
-| Paper writing with reference notebook queries | Requires tool orchestration + truth-grounding |
-| XMind-driven writing (complex chapters) | Needs to read XMind + query notebook + manage structure |
+| Paper writing with NotebookLM queries | Requires tool orchestration + truth-grounding |
+| XMind-driven writing (complex chapters) | Needs to read XMind + query NotebookLM + manage structure |
 | Experiment design | Hypothesis formation, control design |
 | Any task needing memory/patterns.md | Subagents can't read ~/.claude/memory/ |
 
-### Sonnet — Dispatch as Subagent
+### Sonnet -- Dispatch as Subagent
 
 Capable model for structured work with clear instructions. Dispatch with `Agent` tool.
 
 | Task | Context to Inject |
 |------|-------------------|
 | Draft a paper section (XMind already parsed by Opus) | Section outline + content seeds + citation list |
-| Code review | File paths + what to look for |
-| Experiment log analysis | Log path + healthy metric ranges |
+| Code review (Python/MATLAB) | File paths + what to look for |
+| TensorBoard analysis | TB log path + healthy metric ranges |
 | Daily report writing | Project name + what was done + metrics |
 | Obsidian note creation | Vault path + frontmatter template + content |
-| XMind creation (structure is clear) | Rules + content specification |
+| XMind creation (structure is clear) | Rules from AGENTS.md + content specification |
 | Literature search summarisation | Search results + relevance criteria |
-| Experiment config review | Config path + what to check |
+| Experiment config review | meta.yaml path + what to check |
 | TEMPORARY_NOTES processing | Note content + project detection hints + vault paths |
 | Code refactoring (non-critical, <100 lines) | File path + what to change + constraints |
 | Comparing two files/configs | Both file paths + what differences matter |
 
-### Haiku — Dispatch as Subagent
+### Haiku -- Dispatch as Subagent
 
 Fastest, cheapest. For mechanical tasks with no ambiguity.
 
 | Task | Context to Inject |
 |------|-------------------|
-| Fix citation formatting in .bib | File path + style rules |
+| Fix citation formatting in .bib | File path + style rules (authoryear) |
 | Fix typos/grammar | File path + "don't change technical terms" |
 | Search codebase for a function/variable | Directory + search term |
 | List files matching a pattern | Directory + glob pattern |
@@ -68,7 +68,7 @@ New task arrives
   |
   +--> Needs user interaction or confirmation? --> OPUS (stay in main)
   |
-  +--> Needs multi-tool orchestration (notebook + reference mgr + XMind)? --> OPUS
+  +--> Needs multi-tool orchestration (NotebookLM + Zotero + XMind)? --> OPUS
   |
   +--> Structured work with clear inputs/outputs?
   |      |
@@ -84,7 +84,7 @@ New task arrives
 When dispatching a subagent, always provide:
 
 ```
-You are helping with [user]'s research on [topic].
+You are helping with Jianing Fu's PhD research on wind turbine RL control.
 
 ## Task
 [Specific task description]
@@ -103,9 +103,9 @@ You are helping with [user]'s research on [topic].
 
 ## Cost Awareness
 
-- Opus: ~$15/M input, ~$75/M output — use for reasoning
-- Sonnet: ~$3/M input, ~$15/M output — use for structured work
-- Haiku: ~$0.25/M input, ~$1.25/M output — use for mechanical tasks
+- Opus: ~$15/M input, ~$75/M output -- use for reasoning
+- Sonnet: ~$3/M input, ~$15/M output -- use for structured work
+- Haiku: ~$0.25/M input, ~$1.25/M output -- use for mechanical tasks
 
 A 500-line code review in Opus costs ~60x more than in Haiku. If Haiku can spot the bug, let it.
 
@@ -125,5 +125,5 @@ The user knows the task better than the routing rules. Their explicit dispatch a
 
 - Haiku fails or gives low-quality output -> retry with Sonnet
 - Sonnet fails or needs context it doesn't have -> escalate to Opus
-- Never retry more than once at the same tier — escalate instead
+- Never retry more than once at the same tier -- escalate instead
 - If a task was wrongly routed (user corrects), record in patterns.md for future routing
