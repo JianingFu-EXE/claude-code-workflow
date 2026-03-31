@@ -1,104 +1,94 @@
-# Claude Code Workflow — Research Edition
+# Claude Code Workflow -- Research Edition
 
-A battle-tested workflow template for Claude Code, customised for **PhD researchers and academic writers**. Memory management, context engineering, XMind-driven writing, and automatic model routing — from daily usage across multiple research projects.
+A battle-tested workflow config for Claude Code, built for **PhD researchers and academic writers**. Context engineering, XMind-driven writing, source-grounded claims, and research-domain skills -- from daily usage across multiple research projects.
 
-> Forked from [runesleo/claude-code-workflow](https://github.com/runesleo/claude-code-workflow) and extended with research-specific patterns.
+> Evolved from [runesleo/claude-code-workflow](https://github.com/runesleo/claude-code-workflow). The original targets software developers; this fork is purpose-built for academic research.
 
 **Not a tutorial. Not a toy config. A production workflow for researchers who use Claude Code daily.**
 
-## What This Fork Adds
-
-The original template targets software developers and indie hackers. This fork adds patterns specifically for **academic research workflows**:
+## What This Does
 
 | Pattern | What it does |
 |---------|-------------|
-| **XMind-as-Instruction** | Mind maps become structural blueprints — Claude reads .xmind files as instructions to produce LaTeX, Obsidian notes, or reports |
-| **TEMPORARY_NOTES Inbox** | Drop raw notes into an inbox folder. Claude adds frontmatter, comments, and sorts them at end-of-day |
+| **XMind-as-Instruction** | Mind maps become structural blueprints -- Claude reads .xmind files as instructions to produce LaTeX, Obsidian notes, or reports |
+| **Inbox Processing** | Drop raw notes into an inbox folder. Claude adds frontmatter, comments, and sorts them at end-of-day |
 | **Overleaf Staging (temporary.tex)** | New LaTeX content goes to a staging file with highlighted additions/deletions. You audit before merging to main.tex |
 | **Source-Grounded Writing** | All paper claims must trace to NotebookLM-verified sources, own experiment data, or explicit derivations. Unverified claims are flagged |
-| **Per-Project Workspaces** | Each project is self-contained: code, XMind, Overleaf, reference notebook, daily reports — all in one folder |
-| **Daily Reports in Workspace** | Claude writes progress reports to each project's Obsidian folder (not internal memory), so you track progress in your vault |
+| **Per-Project Workspaces** | Each project is self-contained: code, XMind, Overleaf, reference notebook, daily reports -- all in one folder |
+| **Daily Reports** | Claude writes progress reports to a centralized daily report folder in your Obsidian vault |
 | **Academic Content Safety** | Never fabricate data/citations, verify claims against reference notebooks, flag uncertainty |
-| **Research-Specific Agents** | paper-reviewer, experiment-tracker, literature-scout (alongside the original pr-reviewer, security-reviewer) |
-| **Auto Model Selection** | Opus for reasoning, Sonnet subagents for daily work, Haiku for mechanical tasks — saves tokens automatically |
-| **Test-Driven Development** | RED-GREEN-REFACTOR enforced for all features and bugfixes — no production code without a failing test |
-| **Subagent-Driven Development** | Fresh subagent per task + two-stage review (spec compliance then code quality) for high-quality autonomous execution |
-| **Implementation Plans** | Bite-sized task plans with exact file paths, complete code, TDD structure, and verification steps |
-| **Parallel Agent Dispatch** | Independent problems solved concurrently — N problems in time of 1 |
+| **Research Skills** | Domain-specific skills: XMind generation, NotebookLM queries, Elsevier/Zotero import, paper manuscript drafting, literature atlas mapping |
+| **Auto Model Selection** | Opus for reasoning, Sonnet for structured work, Haiku for mechanical tasks -- saves tokens automatically |
 
-## Architecture: Three Layers
+## Architecture: Two Layers
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  Layer 0: Auto-loaded Rules (always in context)         │
-│  ┌─────────────┐ ┌────────────┐ ┌───────────────┐     │
-│  │ behaviors.md │ │skill-      │ │memory-flush.md│     │
-│  │              │ │triggers.md │ │               │     │
-│  └─────────────┘ └────────────┘ └───────────────┘     │
-├─────────────────────────────────────────────────────────┤
-│  Layer 1: On-demand Docs (loaded when needed)           │
-│  agents.md · content-safety.md · task-routing.md        │
-│  behaviors-extended.md · behaviors-reference.md ...     │
-├─────────────────────────────────────────────────────────┤
-│  Layer 2: Hot Data (your working memory)                │
-│  today.md · projects.md · goals.md · active-tasks.json  │
-└─────────────────────────────────────────────────────────┘
++-----------------------------------------------------------+
+|  Layer 0: Auto-loaded Rules (always in context)            |
+|  +--------------+ +---------------+ +----------------+    |
+|  | behaviors.md | | skill-        | | memory-flush.md|    |
+|  |              | | triggers.md   | |                |    |
+|  +--------------+ +---------------+ +----------------+    |
+|  | thesis-xmind-format.md                             |    |
+|  +----------------------------------------------------+    |
++-----------------------------------------------------------+
+|  Layer 1: On-demand Docs + References (loaded when needed) |
+|  agents.md . content-safety.md . task-routing.md           |
+|  behaviors-extended.md . behaviors-reference.md            |
+|  superpowers/specs/ . references/codex-tools.md            |
++-----------------------------------------------------------+
 ```
 
-**Why three layers?** Context window is expensive. Loading everything wastes tokens and degrades quality. This system loads rules always (~2K tokens), docs only when relevant (~1-3K each), and keeps your daily state hot for instant recall.
+**Why two layers?** Context window is expensive. Loading everything wastes tokens and degrades quality. Layer 0 rules are always present (~3K tokens). Layer 1 docs load only when relevant (~1-3K each). Memory is handled by Claude Code's built-in auto-memory system, not flat files.
 
 ## What's Inside
 
 ```
 claude-code-workflow/
-├── CLAUDE.md                     # Entry point — identity, projects, preferences
-├── README.md                     # You are here
-├── patterns.md                   # Cross-project lessons learned
-│
-├── rules/                        # Layer 0: Always loaded
-│   ├── behaviors.md              # Core rules (XMind, inbox, staging, debugging, routing)
-│   ├── skill-triggers.md         # When to auto-invoke which skill
-│   └── memory-flush.md           # Auto-save triggers + inbox processing
-│
-├── docs/                         # Layer 1: On-demand reference
-│   ├── agents.md                 # Research agent roles & dispatch
-│   ├── behaviors-extended.md     # Paper writing protocol, literature review, mind maps
-│   ├── behaviors-reference.md    # LaTeX, Obsidian, experiment platform guides
-│   ├── content-safety.md         # Academic integrity & hallucination prevention
-│   ├── scaffolding-checkpoint.md # "Do you really need to self-host?" checklist
-│   └── task-routing.md           # Model tier routing + cost comparison
-│
-├── memory/                       # Layer 2: Your working state (templates)
-│   ├── today.md                  # Daily session log
-│   ├── projects.md               # Cross-project status (with thesis chapter mapping)
-│   ├── goals.md                  # Week/month/quarter goals
-│   └── active-tasks.json         # Cross-session task registry
-│
-├── skills/                       # Reusable skill definitions
-│   ├── session-end/              # End-of-session: inbox processing + save + commit
-│   ├── verification-before-completion/  # "Run it. Read output. THEN claim done."
-│   ├── systematic-debugging/     # 4-phase debugging protocol
-│   ├── planning-with-files/      # File-based planning for complex tasks
-│   ├── experience-evolution/     # Auto-accumulate project knowledge
-│   ├── test-driven-development/  # RED-GREEN-REFACTOR cycle
-│   ├── writing-plans/            # Bite-sized implementation plans with TDD structure
-│   ├── subagent-driven-development/  # Fresh subagent per task + two-stage review
-│   └── dispatching-parallel-agents/  # Parallel agent dispatch for independent tasks
-│
-├── agents/                       # Custom agent definitions
-│   ├── paper-reviewer.md         # Academic paper/thesis review
-│   ├── experiment-tracker.md     # Training log analysis & reporting
-│   ├── literature-scout.md       # Literature search & relevance assessment
-│   ├── pr-reviewer.md            # Code review (from original template)
-│   ├── security-reviewer.md      # Security scanning (from original template)
-│   └── performance-analyzer.md   # Performance analysis (from original template)
-│
-└── commands/                     # Custom slash commands
-    ├── debug.md                  # /debug — Start systematic debugging
-    ├── deploy.md                 # /deploy — Pre-deployment checklist
-    ├── exploration.md            # /exploration — Challenge a research direction
-    └── review.md                 # /review — Academic paper review
++-- CLAUDE.md                     # Entry point -- identity, projects, preferences
++-- AGENTS.md                     # Agent collaboration guide (for Codex and multi-agent)
++-- SETUP.md                      # Setup instructions
++-- README.md                     # You are here
++-- patterns.md                   # Cross-project lessons learned
+|
++-- rules/                        # Layer 0: Always loaded
+|   +-- behaviors.md              # Core rules (XMind, inbox, staging, debugging, routing)
+|   +-- skill-triggers.md         # When to auto-invoke which skill
+|   +-- memory-flush.md           # Auto-save triggers + inbox processing
+|   +-- thesis-xmind-format.md    # XMind format spec for thesis structure files
+|
++-- docs/                         # Layer 1: On-demand reference
+|   +-- agents.md                 # Research agent roles & dispatch
+|   +-- behaviors-extended.md     # Paper writing protocol, literature review, mind maps
+|   +-- behaviors-reference.md    # LaTeX, Obsidian, experiment platform guides
+|   +-- content-safety.md         # Academic integrity & hallucination prevention
+|   +-- task-routing.md           # Model tier routing + cost comparison
+|   +-- superpowers/specs/        # Design specs for the Superpowers skill system
+|
++-- references/                   # Standalone reference docs
+|   +-- codex-tools.md            # Codex tool compatibility reference
+|
++-- skills/                       # Research-domain skill definitions
+|   +-- xmind/                    # XMind mind map generation and manipulation
+|   +-- notebooklm/               # NotebookLM browser automation for source queries
+|   +-- notebook-query/           # Quick NotebookLM question + XMind integration
+|   +-- paper-manuscript/         # Paper drafting with XMind + NotebookLM + Zotero
+|   +-- paper-atlas/              # Literature mapping: XMind -> NotebookLM -> Zotero
+|   +-- elsevier-zotero-import/   # ScienceDirect search + Zotero import pipeline
+|   +-- research-ops-subchapter-search/  # Systematic literature search planning
+|   +-- obsidian-markdown/        # Obsidian-flavoured markdown (wikilinks, callouts)
+|   +-- obsidian-bases/           # Obsidian database views (.base files)
+|   +-- json-canvas/              # Obsidian canvas files (.canvas)
+|
++-- commands/                     # Custom slash commands
+    +-- debug.md                  # /debug -- Start systematic debugging
 ```
+
+### Where did the dev workflow skills go?
+
+The generic development workflow skills (TDD, subagent-driven development, systematic debugging, verification-before-completion, writing plans, parallel agent dispatch, experience evolution, planning-with-files, session-end) have moved to **Superpowers** -- a separate skill system that layers on top of Claude Code. This repo now focuses exclusively on the **research workflow configuration**.
+
+Similarly, the `agents/` folder (paper-reviewer, experiment-tracker, etc.) and `memory/` folder (today.md, projects.md, etc.) have been removed. Agent definitions are now in `AGENTS.md`, and memory is handled by Claude Code's built-in auto-memory system rather than flat files.
 
 ## Quick Start
 
@@ -122,25 +112,20 @@ ln -sf ~/claude-code-workflow/docs ~/.claude/docs
 Open `~/.claude/CLAUDE.md` and fill in:
 
 - **User Info**: Your name, university, thesis title, tool stack
-- **Key Paths**: Define `<PHD>`, `<RESEARCH>`, `<FN>`, `<TEMP>`, `<CODE>` shorthands
+- **Key Paths**: Define `<PHD>`, `<RESEARCH>`, `<PROJ>`, `<CODE>` shorthands
 - **Per-Project Workspace Map**: List each project with its paths, XMind files, NotebookLM URLs
-- **Sub-project Memory Routes**: Map keywords to the right MEMORY.md
-- **Thesis Chapter Mapping**: Which chapter maps to which project
 
 ### 3. Set up your Obsidian vault
 
 Create the folder structure in your Research vault:
 
 ```
-TEMPORARY_NOTES/
-FLEETING NOTES/
-  Project-1/
-  Project-2/
-  Thesis/
-PERMANENT_NOTES/
-PAPER_NOTES/
-DAILY_NOTES/
-ASSETS/
+Inbox/              <-- Raw notes go here
+Projects/           <-- Per-project workspaces
+Notes/              <-- Mature, reusable knowledge
+PAPER_NOTES/        <-- Literature notes on specific papers
+ASSETS/             <-- Images, diagrams, attachments
+DUE/                <-- Deadlines and submissions
 ```
 
 ### 4. Start a session
@@ -151,12 +136,12 @@ claude
 
 Claude will automatically load your rules and start following the workflow. Try:
 
-- Ask it to write a paper section — it will look for an XMind map first
-- Drop a raw note in `TEMPORARY_NOTES/` and say "sort my notes"
-- Ask it to draft LaTeX — it will write to `temporary.tex` for your review
+- Ask it to write a paper section -- it will look for an XMind map first
+- Drop a raw note in `Inbox/` and say "sort my notes"
+- Ask it to draft LaTeX -- it will write to `temporary.tex` for your review
 - Say "that's all for today" and watch it process your inbox, write reports, and save state
 
-## Key Concepts (Research-Specific)
+## Key Concepts
 
 ### XMind-as-Instruction
 
@@ -164,12 +149,12 @@ The core writing workflow: **you build structure in XMind, Claude reads it as in
 
 ```
 You (XMind)          Claude reads           Claude writes
-┌──────────┐        ┌──────────┐          ┌──────────┐
-│ Topic     │───────>│ Section  │─────────>│ \section │
-│  ├ Note   │        │  Content │          │  LaTeX   │
-│  ├ Label  │        │  Role    │          │  output  │
-│  └ Marker │        │  Priority│          │          │
-└──────────┘        └──────────┘          └──────────┘
++----------+        +----------+          +----------+
+| Topic     |------->| Section  |--------->| \section |
+|  +- Note  |        |  Content |          |  LaTeX   |
+|  +- Label |        |  Role    |          |  output  |
+|  +- Marker|        |  Priority|          |          |
++----------+        +----------+          +----------+
 ```
 
 No XMind? Claude asks: "Should I create the structure first?" Recommended: always XMind first.
@@ -178,14 +163,14 @@ No XMind? Claude asks: "Should I create the structure first?" Recommended: alway
 
 Claude never writes directly to `main.tex`. Instead:
 
-1. Generates `temporary.tex` (compiles independently — same preamble as main.tex)
+1. Generates `temporary.tex` (compiles independently -- same preamble as main.tex)
 2. New content highlighted in **blue** (`\added{}`), deletions in **red** (`\deleted{}`)
 3. You review in Overleaf, request changes, iterate
-4. Say "merge to main" when satisfied — highlights stripped, content merged
+4. Say "merge to main" when satisfied -- highlights stripped, content merged
 
-### TEMPORARY_NOTES Inbox
+### Inbox Processing
 
-During the day, drop raw notes (no frontmatter, no structure) into `TEMPORARY_NOTES/`. At end of day, Claude:
+During the day, drop raw notes (no frontmatter, no structure) into `Inbox/`. At end of day, Claude:
 
 1. Adds frontmatter (title, date, tags, project)
 2. Appends `## Claude's Notes` with context and connections
@@ -206,7 +191,7 @@ Not every task needs Opus. Claude auto-routes:
 | Architecture decisions | Code review | Typo fixes |
 | Thesis framing | Experiment analysis | File searching |
 | XMind + notebook writing | Daily report writing | Frontmatter generation |
-| Multi-step debugging | TEMPORARY_NOTES sorting | Simple find-and-replace |
+| Multi-step debugging | Inbox sorting | Simple find-and-replace |
 
 Override anytime: "use Opus for this" / "Haiku: fix the typos" / "Sonnet: rewrite the abstract"
 
@@ -215,34 +200,31 @@ Override anytime: "use Opus for this" / "Haiku: fix the typos" / "Sonnet: rewrit
 ### Adding a new project
 
 1. Add workspace entry to CLAUDE.md's project map
-2. Create folder in `<FN>/Your-Project/`
-3. Add memory route in CLAUDE.md's sub-project memory routes
-4. Update `memory/projects.md`
+2. Create folder in `<PROJ>/Your-Project/`
+3. Add project context auto-detection keywords in `rules/behaviors.md`
 
 ### Adding domain-specific debugging hints
 
-Edit `rules/behaviors.md` → "Debugging Protocol" section. Add your domain's common failure modes (commented examples provided).
+Edit `rules/behaviors.md` -> "Debugging Protocol" section. Add your domain's common failure modes.
 
 ### Adding research skills
 
-If you use tools like NotebookLM, Zotero, or XMind, add skill files under `skills/` and trigger rules under `rules/skill-triggers.md`. The template includes commented examples.
+Add skill files under `skills/` and trigger rules under `rules/skill-triggers.md`. Each skill has a `SKILL.md` that Claude reads when the skill is invoked.
 
 ### Adjusting model routing
 
-Edit `rules/behaviors.md` → "Task Routing" section, and `docs/task-routing.md` for detailed tier definitions.
+Edit `rules/behaviors.md` -> "Task Routing" section, and `docs/task-routing.md` for detailed tier definitions.
 
 ## Philosophy
 
-This template encodes principles from daily AI-assisted research:
+This config encodes principles from daily AI-assisted research:
 
 1. **Structure > Prompting**: XMind mind maps + well-organised config beat clever one-off prompts
-2. **Memory > Intelligence**: An AI that remembers past experiment failures is more valuable than a smarter AI starting fresh
-3. **Verification > Confidence**: Source-ground every claim. Flag what you can't verify
-4. **Layered Loading > Flat Config**: Load rules always, docs on demand, data when needed
-5. **Auto-save > Manual Save**: Session-end triggers automatically — close the window anytime
-6. **Staging > Direct Edit**: Audit LaTeX changes before they hit main.tex
-7. **Test-First > Test-After**: Watch the test fail before writing code — proves the test works
-8. **Subagent Isolation > Context Pollution**: Fresh agent per task, never inherit session history
+2. **Verification > Confidence**: Source-ground every claim. Flag what you can't verify
+3. **Layered Loading > Flat Config**: Load rules always, docs on demand
+4. **Auto-save > Manual Save**: Session-end triggers automatically -- close the window anytime
+5. **Staging > Direct Edit**: Audit LaTeX changes before they hit main.tex
+6. **Research Skills > Generic Skills**: Domain-specific tools (NotebookLM, Zotero, XMind) over generic dev patterns
 
 ## Requirements
 
@@ -256,9 +238,9 @@ This template encodes principles from daily AI-assisted research:
 ## Prior Art & Credits
 
 - Original template by [@runes_leo](https://x.com/runes_leo): [runesleo/claude-code-workflow](https://github.com/runesleo/claude-code-workflow)
-- Three-layer context architecture from the original template
+- Two-layer context architecture evolved from the original three-layer design
 - Research-specific patterns developed through daily PhD workflow usage
 
 ## License
 
-MIT — Use it, fork it, make it yours.
+MIT -- Use it, fork it, make it yours.

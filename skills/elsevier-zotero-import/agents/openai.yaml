@@ -1,0 +1,4 @@
+interface:
+  display_name: "Elsevier to Zotero"
+  short_description: "Search ScienceDirect and add results to Zotero"
+  default_prompt: "Add papers from Elsevier/ScienceDirect to Zotero based on my description."

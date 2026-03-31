@@ -1,0 +1,5 @@
+Regenerate the full XMind map as a complete JSON payload.
+Return the full `path` and `sheets` object for the entire mind map.
+Most topics should include substantial and detailed notes.
+Use 2-5 sentences minimum per note and add explanations, examples, context, and reasoning for most non-leaf topics.
+Include enough detail that the full map can be recreated without referring back to prior versions.

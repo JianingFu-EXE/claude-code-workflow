@@ -1,61 +1,71 @@
 # Memory Flush
 
-> Don't rely on user triggers -- auto-save. User might close the window at any time.
+> Three-tier memory system. Don't rely on user triggers -- auto-save. User might close the window at any time.
 
-## Two Write Targets
+## Three Tiers
 
-1. **User-facing**: Daily report in project workspace (`<PROJ>/{Project}/YYYY-MM-DD Daily Report.md`)
-   - The user reads these in Obsidian to track progress
-   - Written after non-trivial work on a project
-2. **Claude-internal**: `memory/today.md` + `memory/active-tasks.json` + `MEMORY.md` + `patterns.md`
-   - Claude reads these for session continuity and cross-session learning
-   - `today.md` and `active-tasks.json` are **cloud-synced** (symlinked to `<RESEARCH>/today.md` and `<RESEARCH>/active-tasks.json` via OneDrive) — both devices read/write the same files
-   - Updated automatically by the two-level flush system
+| Tier | Where | What | Lifecycle |
+|------|-------|------|-----------|
+| **Short term** | Prompt sheet in `<INBOX>/` | Session progress, decisions, blockers | Updated during work. Cleared on `/clear`, `/compact`, `/exit` — promote important bits first |
+| **Mid term** | Project workspace `<PROJ>/{Project}/` + `<RESEARCH>/Daily Report/` | Project reports, daily reports, conclusions | Written when work reaches a milestone or on "call it a day" |
+| **Long term** | `CLAUDE.md` / `AGENTS.md` | Persistent lessons, workflow changes, config updates | Updated when something matters across all future sessions |
 
-## Two Flush Levels
+## Short Term: Prompt Sheet
 
-### Level 1: Task Complete (after finishing a piece of work)
+During a session, maintain a prompt sheet in `<INBOX>/` as an Obsidian .md file.
 
-**Trigger**: Task/work item finished within the session.
+- Update with progress notes after finishing a piece of work
+- On `/clear`, `/compact`, or `/exit`: promote anything important to the appropriate tier before the context is lost
 
-**Action**: Update `memory/today.md` only.
-- Append what was done, key decisions, results, blockers
-- Keep it as a running log — multiple entries per session are fine
-- Do NOT write daily reports or update MEMORY.md yet
+## Mid Term: Project Reports + Daily Reports
 
-### Level 2: Call It a Day (end of session)
+### Project Report (milestone-driven)
 
-**Trigger**: Exit signal from user.
+When work on a project reaches a reportable conclusion, write a report in the project workspace (`<PROJ>/{Project}/`).
 
-**Action**: Full flush — four steps, all mandatory:
+### Daily Report (end-of-session)
 
-1. **Write daily report** in project workspace (`<PROJ>/{Project}/YYYY-MM-DD Daily Report.md`)
-   - Consolidate from today.md entries into a coherent report
+**Trigger**: "Call it a day" / exit signal from user.
+
+Write a daily report to `<RESEARCH>/Daily Report/YYYY-MM-DD Daily Report.md`:
+- Summarize what was achieved across all projects worked on
+- Include decisions, results/metrics, next steps
+- Append if a report for today already exists
+
+## Long Term: CLAUDE.md / AGENTS.md
+
+When a session produces an important, persistent lesson — update `CLAUDE.md` (for Claude Code) and/or `AGENTS.md` (for Codex). These are the long-term memory.
+
+Examples: new workflow rule, tool config discovery, project status change, path change.
+
+## "Call It a Day" Protocol
+
+**Trigger**: "That's all for now" / "Done for today" / "I'm heading out" / "Going out" / "Talk later" / "Closing window" / "Call it a day"
+
+Three mandatory steps:
+
+1. **Write daily report** to `<RESEARCH>/Daily Report/YYYY-MM-DD Daily Report.md`
+   - Consolidate session work into a coherent report
    - Include: what was done, decisions, results/metrics, next steps
-   - Append if report for today already exists
 
-2. **Update long-term memory** (MEMORY.md / patterns.md)
-   - Record new technical lessons, pitfalls, tool configs
-   - Update or remove stale entries
-   - Add cross-project patterns to `patterns.md`
-
-3. **Process Inbox** (`<RESEARCH>/Inbox/`)
+2. **Process Inbox** (`<RESEARCH>/Inbox/`)
    - Read every file
    - Add frontmatter (title, date, tags, project)
    - Append `## Claude's Notes` at the bottom
    - Move to correct folder (Projects/{Project}/, PAPER_NOTES/, Notes/)
    - Do NOT modify user's original text
 
-4. **Empty today.md** — clear it after daily report is written. It resets for the next session.
+3. **Update long-term memory** if warranted
+   - Record new technical lessons or workflow changes in `CLAUDE.md` / `AGENTS.md`
+   - Add cross-project patterns to `patterns.md`
 
 ## Other Trigger Conditions
 
-- **Non-trivial task starts** -> Write today.md session header: `### SN (~HH:MM) [project] Working on XXX...`
-- **Key literature finding** -> Record in MEMORY.md or patterns.md (don't wait for exit)
-- **Reusable lesson learned** -> Record in patterns.md immediately
+- **Key literature finding** -> Record in `patterns.md` or long-term memory (don't wait for exit)
+- **Reusable lesson learned** -> Record in `patterns.md` immediately
 
-## Exit Signals (Execute Level 2 immediately)
+## Exit Signals (Execute "Call It a Day" immediately)
 
-"That's all for now" / "Done for today" / "I'm heading out" / "Going out" / "Talk later" / "Closing window" / "Call it a day" -> Immediately run Level 2
+"That's all for now" / "Done for today" / "I'm heading out" / "Going out" / "Talk later" / "Closing window" / "Call it a day" -> Immediately run the protocol above
 
 Banned: Waiting for manual save / Batching saves / Assuming user will end normally

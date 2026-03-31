@@ -35,15 +35,15 @@ Each project lives in `<PROJ>/{Project}/` (see CLAUDE.md for full paths). A proj
 - **XMind**: structural blueprints (.xmind files) -- Claude reads these as writing instructions
 - **Overleaf**: paper LaTeX (git-synced subfolder)
 - **NotebookLM**: references uploaded to the project's notebook -- Claude queries these for truth
-- **Daily reports**: Obsidian .md notes -- Claude writes these here for the user to track progress
+- **Daily reports**: written to `<RESEARCH>/Daily Report/` (centralized, not per-project)
 
-**Daily reports go in the project workspace, NOT in `~/.claude/memory/today.md`.** The `today.md` is Claude's internal session scratchpad. The user tracks progress via daily reports in each project's folder.
+**Daily reports go in `<RESEARCH>/Daily Report/`.** Short-term session notes go in prompt sheets in `<INBOX>/`. The user tracks progress via daily reports and project workspace notes.
 
 ## Documentation Structure
 
 - Project-level: Obsidian notes in `<PROJ>/{Project}/` workspace
 - Thesis-level: `AGENTS.md` in PHD vault (workspace guide)
-- Status SSOT: cross-project -> `memory/projects.md`
+- Status SSOT: cross-project -> project map in `CLAUDE.md` / `AGENTS.md`
 
 ## XMind-as-Instruction Rule (CORE WORKFLOW)
 **XMind = structural blueprint. Workflow: User builds XMind → Claude reads XMind → Claude writes output.**
@@ -52,7 +52,7 @@ Each project lives in `<PROJ>/{Project}/` (see CLAUDE.md for full paths). A proj
 > Full procedure → Read docs/behaviors-extended.md § Paper Writing Protocol
 
 ## Daily Report Rule
-After non-trivial work, write daily report in `<PROJ>/{Project}/` as Obsidian .md. Append if exists.
+After non-trivial work, write daily report in `<RESEARCH>/Daily Report/` as Obsidian .md. Append if exists.
 > Full format → Read docs/behaviors-extended.md § Daily Report Format
 
 ## Overleaf Staging Rule
@@ -110,16 +110,16 @@ No blind fixes. Four phases:
 
 **Trigger immediately, don't wait for session-end**:
 
-1. **Corrected by user** -> Record immediately in MEMORY.md
+1. **Corrected by user** -> Record immediately in long-term memory (`CLAUDE.md` / `AGENTS.md`) or `patterns.md`
 2. **3 consecutive failures** -> Pause and record what was tried
 3. **Counter-intuitive discovery** -> Record immediately
 4. **Experiment insight** -> Record: what config produced what result
 
-**Output**: Record note in appropriate MEMORY.md
+**Output**: Record in `CLAUDE.md` / `AGENTS.md` (long-term) or `patterns.md` (cross-project patterns)
 
 ## Memory Search Rules
 
-- When encountering an error, check MEMORY.md and patterns.md first
+- When encountering an error, check `patterns.md` and `CLAUDE.md` first
 - When starting work on a project, read the project's Obsidian notes for context
 - Code search: locate directory first, then precise search
 
@@ -150,7 +150,7 @@ Each commit does one thing. Types: `fix/feat/refactor/docs/test/chore`.
 Banned: mixed changes, meaningless messages, >100 lines without splitting.
 
 ## Data Write-back Rules
-Write metrics/results to the right place immediately: TB metrics → daily report, lessons → MEMORY.md, patterns → patterns.md.
+Write metrics/results to the right place immediately: TB metrics → daily report, lessons → `CLAUDE.md`/`AGENTS.md`, patterns → `patterns.md`.
 > Full table → Read docs/behaviors-extended.md § Data Write-back Rules
 
 ---

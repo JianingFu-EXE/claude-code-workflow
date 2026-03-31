@@ -12,7 +12,7 @@
 ## Citation Rules
 
 - Only cite papers that exist and say what you claim they say
-- When uncertain about a citation, use NotebookLM to verify against uploaded sources
+- When uncertain about a citation, use NotebookLM to verify against uploaded sources. Ask the same question three ways (e.g., direct factual query, rephrased with different terminology, negated/devil's advocate form) to triangulate the answer and catch source-grounding gaps
 - If a paper isn't in NotebookLM or Zotero, flag it for manual verification
 - Never generate fake DOIs, page numbers, or publication details
 
@@ -64,6 +64,6 @@
 
 ### Long Conversation Re-Anchor (>20 turns or >50 tool calls):
 1. Pause and summarise: current task, decisions made so far, open questions
-2. Re-read `memory/today.md` to verify alignment with session progress
+2. Re-read the current prompt sheet in `<INBOX>/` to verify alignment with session progress
 3. Check if any assumptions from early in the conversation have been invalidated
 4. Suggest fresh session if context quality has degraded significantly

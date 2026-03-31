@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Ops Search"
+  short_description: "Map fields to subchapters and file literature"
+  default_prompt: "Use $research-ops-subchapter-search to build a subchapter-level literature search and Zotero filing plan for my research topic."

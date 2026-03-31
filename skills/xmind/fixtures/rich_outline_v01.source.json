@@ -1,0 +1,95 @@
+{
+  "document": {
+    "title": "Project Launch",
+    "stem": "rich_outline",
+    "version": 1,
+    "detail": "rich"
+  },
+  "sheets": [
+    {
+      "id": "sheet-main",
+      "title": "Launch Plan",
+      "rootTopic": {
+        "id": "root-launch",
+        "title": "Project Launch",
+        "labels": ["default-rich"],
+        "notes": {
+          "plain": "Rich mode behaves like the older workflow. It carries explanatory notes across the core branches so the map can stand on its own as both an outline and a lightweight narrative artifact."
+        },
+        "children": [
+          {
+            "id": "branch-goals",
+            "title": "Goals",
+            "notes": {
+              "plain": "This branch explains the intended release outcomes in enough detail that a collaborator can understand the product direction without reopening the original planning document. It includes the expected launch milestone and the usability target for new users."
+            },
+            "children": [
+              {
+                "id": "goal-1",
+                "title": "Ship beta",
+                "notes": {
+                  "plain": "The beta milestone should represent a coherent user slice with analytics, onboarding, and support readiness already wired in."
+                }
+              },
+              {
+                "id": "goal-2",
+                "title": "Reduce onboarding friction",
+                "notes": {
+                  "plain": "This goal focuses on shortening time to first success and removing confusing steps from the signup and activation path."
+                }
+              }
+            ]
+          },
+          {
+            "id": "branch-risks",
+            "title": "Risks",
+            "markers": ["priority-2"],
+            "notes": {
+              "plain": "The risk branch is intentionally descriptive in rich mode so handoff readers can understand why each risk matters and what early warning signals should be watched during the launch window."
+            },
+            "children": [
+              {
+                "id": "risk-1",
+                "title": "Late design sign-off",
+                "notes": {
+                  "plain": "If design approvals slip, engineering and marketing assets both move, which compresses testing time and increases launch-day coordination load."
+                }
+              },
+              {
+                "id": "risk-2",
+                "title": "Analytics gaps",
+                "href": "https://example.com/analytics",
+                "notes": {
+                  "plain": "Missing event coverage would make it difficult to judge whether onboarding changes actually improved activation and would weaken the post-launch learning loop."
+                }
+              }
+            ]
+          },
+          {
+            "id": "branch-timeline",
+            "title": "Timeline",
+            "notes": {
+              "plain": "This branch records the sequence of key checkpoints, making dependencies between planning, review, and launch readiness visible to the whole team."
+            },
+            "children": [
+              {
+                "id": "milestone-1",
+                "title": "Draft plan",
+                "notes": {
+                  "plain": "Draft plan review should lock scope, success metrics, and unresolved dependencies before implementation accelerates."
+                }
+              },
+              {
+                "id": "milestone-2",
+                "title": "Launch review",
+                "notes": {
+                  "plain": "Launch review is the final gate for readiness, analytics confirmation, and fallback planning."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -119,7 +119,7 @@ After context compression, if current task details are fuzzy:
 - **Content**: What was done, key decisions, results/metrics, next steps
 - **Append if exists**: If a daily report for today already exists, append a new section
 
-This is how the user tracks progress. Claude also updates `memory/today.md` internally for its own session continuity, but the user-facing record is the daily report in the project workspace.
+This is how the user tracks progress. Short-term session notes go in prompt sheets in `<INBOX>/`. Daily reports go in `<RESEARCH>/Daily Report/`.
 
 ## Overleaf Staging Rule (Full Procedure)
 
@@ -183,6 +183,6 @@ NotebookLM URLs per project (see CLAUDE.md for full list):
 | TensorBoard metrics | Project workspace daily report | Epoch, reward, KL, alpha |
 | Simulation results | Project workspace daily report | Load reduction %, pitch stats |
 | Literature findings | Zotero + NotebookLM | Citations, key claims |
-| Reusable technical lesson | `MEMORY.md` (auto memory) | Pattern + context |
+| Reusable technical lesson | `CLAUDE.md` / `AGENTS.md` | Pattern + context |
 | Cross-project pattern | `patterns.md` | Lesson + example |
-| Session progress (internal) | `memory/today.md` | What was done, next steps |
+| Session progress (short-term) | Prompt sheet in `<INBOX>/` | What was done, next steps |

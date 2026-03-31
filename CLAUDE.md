@@ -1,8 +1,7 @@
-# PhD Research Workflow -- Claude Code Global Memory
+# PhD Research Workflow -- Claude Code Global Config
 
 > Auto-loaded = rules/ (behaviors.md, skill-triggers.md, memory-flush.md)
 > On-demand = docs/ (agents.md, content-safety.md, task-routing.md, ...)
-> Hot data layer = memory/today.md + memory/active-tasks.json (cloud-synced via OneDrive symlinks)
 
 ---
 
@@ -37,6 +36,7 @@
 | `<PROJ>` | `<RESEARCH>/Projects` | `<RESEARCH>\Projects` |
 | `<INBOX>` | `<RESEARCH>/Inbox` | `<RESEARCH>\Inbox` |
 | `<CODE>` | `/Users/jn/Github` | `C:\Users\jf844` |
+| `<SHARED>` | `/Users/jn/Library/CloudStorage/OneDrive-UniversityofExeter/Projects/.claude-shared` | `C:\Users\jf844\OneDrive - University of Exeter\Projects\.claude-shared` |
 | `<PYTHON>` | _(not used on Mac)_ | `C:\Users\jf844\AppData\Local\anaconda3\envs\DSAC\python.exe` |
 | `<TB>` | _(not used on Mac)_ | `C:\Users\jf844\Meta\TensorBoard` |
 
@@ -82,6 +82,15 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 - **Code**: `<CODE>/GFM-RL/`
 - **XMind**: `<PROJ>/RL-GFM/Hybrid GFM-GFCfor FOWTs.xmind`, `Paper Review - RL-Tuned GFM-GFL Weighting for FOWTs.xmind`
 
+### Hierarchical Grader (TOOL)
+- **Purpose**: Multi-agent pipeline for grading academic papers at paragraph + sentence level
+- **Location**: `<SHARED>/autoresearch-hierarchical-grader/`
+- **Entry point**: `python orchestrator.py --input <file> --notebook <key> --output <report>`
+- **Architecture**: 5-phase pipeline (Parse, Classify, Evidence, Grade, Rewrite) with 7 subagents
+- **Config**: `config/rubric.yaml`, `config/weights.yaml`, `config/notebooklm_notebooks.yaml`
+- **Audit**: See `AUDIT_REPORT.md` for known issues (26 findings, 2 critical)
+- **Project AGENTS.md**: `autoresearch-hierarchical-grader/AGENTS.md` (full architecture reference)
+
 ### Thesis
 - **Workspace**: `<PROJ>/Thesis/` + `<PHD>/OverLeaf/`
 - **Overleaf**: `<PHD>/OverLeaf/Thesis.tex`
@@ -114,8 +123,8 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 ### Handoff Checklist (before session-end)
 
 - [ ] Code committed or progress noted
-- [ ] today.md updated with progress and key decisions
-- [ ] MEMORY.md updated with lessons learned
+- [ ] Prompt sheet in `<INBOX>/` updated with progress and key decisions
+- [ ] CLAUDE.md / AGENTS.md updated if any long-term lessons learned
 - [ ] Remaining issues and next steps noted
 
 ---
@@ -156,41 +165,28 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 
 | Info Type | SSOT File | Do NOT write to |
 |-----------|-----------|-----------------|
-| Daily reports (per-project) | `<PROJ>/{Project}/` workspace (Obsidian .md) | today.md, MEMORY.md |
-| Cross-project overview | `memory/projects.md` | (summary + pointers only) |
-| Technical pitfalls | `MEMORY.md` (per-project auto memory) | today.md |
-| Session-level progress | `memory/today.md` → `<RESEARCH>/today.md` (cloud-synced) | (running log, cleared on Level 2 flush) |
-| In-flight task registry | `memory/active-tasks.json` → `<RESEARCH>/active-tasks.json` (cloud-synced) | (cross-session, cross-device task status) |
-| Experiment results + TB reports | Project workspace daily reports | MEMORY.md |
+| Short-term session notes | Prompt sheet in `<INBOX>/` | CLAUDE.md |
+| Mid-term project reports | `<PROJ>/{Project}/` workspace (Obsidian .md) | CLAUDE.md |
+| Daily reports | `<RESEARCH>/Daily Report/` | Project workspace |
+| Long-term lessons | `CLAUDE.md` / `AGENTS.md` | Prompt sheets |
+| Experiment results + TB reports | Project workspace daily reports | CLAUDE.md |
 | Paper/thesis structure | XMind maps in project workspace (authoritative) | Plain text notes |
 | Paper LaTeX source | Overleaf repo in project workspace | Duplicate elsewhere |
 | NotebookLM references | Per-project notebook (see URLs above) | Don't duplicate content |
 | Zotero/NotebookLM config | PHD vault `AGENTS.md` | Duplicate elsewhere |
 | Code | `<CODE>/` repos (MATLAB + Python) | Obsidian notes |
 | Raw notes inbox | `<INBOX>/` -- user writes here, Claude sorts at end-of-day | Modify user text |
-| Key data points | `MEMORY.md` (Key Data Points section) | today.md |
+| Cross-project patterns | `patterns.md` | CLAUDE.md |
 
 ---
 
-## Memory Write Routing
+## Memory System (Three Tiers)
 
-| Layer | File | What to write |
-|-------|------|---------------|
-| Auto Memory | Project `MEMORY.md` | Technical pitfalls, API details, tool configs |
-| Pattern library | `patterns.md` | Cross-project reusable patterns |
-| Hot data layer | `today.md` | Daily progress, handoff |
-| Task registry | `active-tasks.json` | Cross-session in-flight tasks |
-
-### Sub-project Memory Routes
-
-> Claude: use the path matching the current platform (detect from environment).
-
-| Keywords | macOS memory path | Windows memory path |
-|----------|-------------------|---------------------|
-| thesis/chapter/overleaf/dissertation | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-PHD/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-PHD/memory/MEMORY.md` |
-| meta-rl/PEARL/FTC/fault/IPC/Meta-IPC | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-Research/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-Research/memory/MEMORY.md` |
-| PINN/HJB/Ocean Engineering/active TMD | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-PHD/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-PHD/memory/MEMORY.md` |
-| DSAC/distributional/TSTE/WWC | `~/.claude/projects/-Users-jn-Library-CloudStorage-OneDrive-UniversityofExeter-Obsidian-PHD/memory/MEMORY.md` | `~/.claude/projects/C--Users-jf844-OneDrive---University-of-Exeter-Obsidian-PHD/memory/MEMORY.md` |
+| Tier | Where | What | Lifecycle |
+|------|-------|------|-----------|
+| **Short term** | Prompt sheet in `<INBOX>/` | Session progress, decisions, blockers | Cleared on `/clear`, `/compact`, `/exit` — important bits promoted before clearing |
+| **Mid term** | Project workspace `<PROJ>/{Project}/` + `<RESEARCH>/Daily Report/` | Project reports, daily reports, conclusions | Written when work reaches a reportable milestone or on "call it a day" |
+| **Long term** | `CLAUDE.md` / `AGENTS.md` | Important persistent lessons, workflow changes, config updates | Updated when something matters across all future sessions |
 
 ---
 
@@ -198,13 +194,11 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 
 | Scenario | Load file |
 |----------|-----------|
-| Project overview | `Read memory/projects.md` |
 | Agent/multi-model collaboration | `Read docs/agents.md` |
 | AI content safety/quality control | `Read docs/content-safety.md` |
 | Task routing details | `Read docs/task-routing.md` |
 | Extended behaviors | `Read docs/behaviors-extended.md` |
 | Behavior reference details | `Read docs/behaviors-reference.md` |
-| Cross-day goals/todos | `Read memory/goals.md` |
 | Pattern library | `Read patterns.md` |
 | Debugging (7 investigation techniques) | `Read docs/behaviors-reference.md § Investigation Techniques` |
 | Experiment iteration loop | `Read docs/agents.md § Constraint-Driven Experiment Loop` |
@@ -216,4 +210,4 @@ Each project is a self-contained workspace. All its artefacts (code, XMind, Over
 
 ---
 
-*Last updated: 2026-03-21*
+*Last updated: 2026-03-31*

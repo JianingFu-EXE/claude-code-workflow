@@ -51,8 +51,8 @@
 You are working on [project-name] for Jianing Fu's PhD.
 
 ## Context Loading (must read first)
-1. ~/.claude/memory/today.md -- Today's work context
-2. Relevant project notes in Obsidian PHD/Research vaults
+1. Relevant project notes in Obsidian PHD/Research vaults
+2. Any prompt sheet in `<INBOX>/` from the current session
 
 ## Task
 [Specific task description]

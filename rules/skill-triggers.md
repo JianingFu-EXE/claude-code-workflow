@@ -4,11 +4,11 @@
 
 ## P0 Mandatory
 
-| Scenario | Skill | NOT when |
-|----------|-------|----------|
-| Error/Bug (test/build/simulation failure) | systematic-debugging | Missing env var/path error (fix directly); user already gave fix |
-| Before claiming completion | verification-before-completion | Pure research/exploration/Q&A; only changed docs/comments |
-| Exit signal ("that's all"/"heading out"/etc.) | session-end + memory-flush | Brief pause; mid-task looking at something else |
+| Scenario | Action | NOT when |
+|----------|--------|----------|
+| Error/Bug (test/build/simulation failure) | Follow debugging protocol (behaviors.md § Debugging Protocol) | Missing env var/path error (fix directly); user already gave fix |
+| Before claiming completion | Run command, read output, confirm PASS (Iron Law #3) | Pure research/exploration/Q&A; only changed docs/comments |
+| Exit signal ("that's all"/"heading out"/etc.) | Run "Call It a Day" protocol (memory-flush.md) | Brief pause; mid-task looking at something else |
 
 ## Research Skill Triggers
 
@@ -22,6 +22,7 @@
 | "Find papers" / "search ScienceDirect" / "import to Zotero" | elsevier-zotero-import | Already have the papers |
 | Paper drafting with XMind structure + NotebookLM + Zotero | paper-manuscript | Simple LaTeX editing |
 | Literature mapping: XMind outline -> NotebookLM -> Zotero annotations | paper-atlas | Simple reference lookup |
+| "Scope a field" / "subchapter search" / "literature review structure" / systematic search plan | research-ops-subchapter-search | Already have structure + papers; single paper lookup |
 | Working with .canvas files / visual canvases | json-canvas | Regular markdown |
 | Using Claude API / Anthropic SDK | claude-api | General programming |
 
@@ -31,7 +32,7 @@
 |----------|--------|----------|
 | Stuck >15min | experience-evolution | Known issue in patterns.md |
 | 3 consecutive failures | Pause, revert to debugging Phase 1 | Each failure is a different problem |
-| Complex task >5 files | Suggest planning-with-files | User gave step-by-step instructions |
+| Complex task >5 files | Use Plan mode (EnterPlanMode) | User gave step-by-step instructions |
 
 ## Skill Security Audit
 

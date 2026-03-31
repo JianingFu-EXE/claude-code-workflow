@@ -1,0 +1,16 @@
+# Sensitive data
+skills/notebooklm/data/
+skills/notebooklm/scripts/__pycache__/
+
+# Python
+*.pyc
+__pycache__/
+
+# macOS
+.DS_Store
+
+# Virtual environments
+.venv/
+
+# Subprojects with their own repos
+autoresearch-hierarchical-grader/

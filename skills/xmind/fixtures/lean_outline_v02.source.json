@@ -1,0 +1,74 @@
+{
+  "document": {
+    "title": "Project Launch",
+    "detail": "lean",
+    "stem": "lean_outline",
+    "version": 2,
+    "basedOn": "/Users/jn/.claude/skills/xmind/fixtures/lean_outline_v01.source.json",
+    "updatedAt": "2026-03-25T16:06:26.541Z"
+  },
+  "sheets": [
+    {
+      "id": "sheet-main",
+      "title": "Launch Plan",
+      "rootTopic": {
+        "id": "root-launch",
+        "title": "Project Launch",
+        "labels": [
+          "default-lean"
+        ],
+        "children": [
+          {
+            "id": "branch-goals",
+            "title": "Goals",
+            "children": [
+              {
+                "id": "goal-1",
+                "title": "Ship beta"
+              },
+              {
+                "id": "goal-2",
+                "title": "Reduce onboarding friction"
+              }
+            ]
+          },
+          {
+            "id": "branch-risks",
+            "title": "Risks",
+            "markers": [
+              "priority-2"
+            ],
+            "children": [
+              {
+                "id": "risk-1",
+                "title": "Late design sign-off"
+              },
+              {
+                "id": "risk-2",
+                "title": "Analytics instrumentation gaps",
+                "href": "https://example.com/analytics",
+                "notes": {
+                  "plain": "Only this branch should change between v01 and v02."
+                }
+              }
+            ]
+          },
+          {
+            "id": "branch-timeline",
+            "title": "Timeline",
+            "children": [
+              {
+                "id": "milestone-1",
+                "title": "Draft plan"
+              },
+              {
+                "id": "milestone-2",
+                "title": "Launch review"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

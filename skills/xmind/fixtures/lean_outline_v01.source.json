@@ -1,0 +1,65 @@
+{
+  "document": {
+    "title": "Project Launch",
+    "stem": "lean_outline",
+    "version": 1,
+    "detail": "lean"
+  },
+  "sheets": [
+    {
+      "id": "sheet-main",
+      "title": "Launch Plan",
+      "rootTopic": {
+        "id": "root-launch",
+        "title": "Project Launch",
+        "labels": ["default-lean"],
+        "children": [
+          {
+            "id": "branch-goals",
+            "title": "Goals",
+            "children": [
+              {
+                "id": "goal-1",
+                "title": "Ship beta"
+              },
+              {
+                "id": "goal-2",
+                "title": "Reduce onboarding friction"
+              }
+            ]
+          },
+          {
+            "id": "branch-risks",
+            "title": "Risks",
+            "markers": ["priority-2"],
+            "children": [
+              {
+                "id": "risk-1",
+                "title": "Late design sign-off"
+              },
+              {
+                "id": "risk-2",
+                "title": "Analytics gaps",
+                "href": "https://example.com/analytics"
+              }
+            ]
+          },
+          {
+            "id": "branch-timeline",
+            "title": "Timeline",
+            "children": [
+              {
+                "id": "milestone-1",
+                "title": "Draft plan"
+              },
+              {
+                "id": "milestone-2",
+                "title": "Launch review"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
