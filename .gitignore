@@ -12,5 +12,5 @@ __pycache__/
 # Virtual environments
 .venv/
 
-# Subprojects with their own repos
-autoresearch-hierarchical-grader/
+# Autoresearch output
+autoresearch-hierarchical-grader/output/

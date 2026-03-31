@@ -1,0 +1,72 @@
+# Maps section types to relevant Academic Phrasebank files
+# Files are relative to reference/phrasebank/
+
+section_phrasebank:
+  Background:
+    primary:
+      - "02-Introducing-Work.md"
+    supporting:
+      - "13-Describing-Trends.md"
+      - "14-Describing-Quantities.md"
+      - "17-Indicating-Shared-Knowledge.md"
+
+  Problem:
+    primary:
+      - "09-Being-Critical.md"
+    supporting:
+      - "15-Explaining-Causality.md"
+      - "18-Signalling-Transition.md"
+      - "11-Comparing-and-Contrasting.md"
+
+  Gap:
+    primary:
+      - "09-Being-Critical.md"
+      - "03-Reviewing-the-Literature.md"
+    supporting:
+      - "18-Signalling-Transition.md"
+      - "10-Classifying-and-Listing.md"
+
+  Methodology:
+    primary:
+      - "04-Describing-Methods.md"
+    supporting:
+      - "11-Comparing-and-Contrasting.md"
+      - "15-Explaining-Causality.md"
+      - "16-Giving-Examples-as-Support.md"
+
+  Contribution:
+    primary:
+      - "02-Introducing-Work.md"
+    supporting:
+      - "10-Classifying-and-Listing.md"
+
+  Results:
+    primary:
+      - "05-Reporting-Results.md"
+    supporting:
+      - "14-Describing-Quantities.md"
+      - "13-Describing-Trends.md"
+      - "11-Comparing-and-Contrasting.md"
+
+  Discussion:
+    primary:
+      - "06-Discussing-Findings.md"
+    supporting:
+      - "08-Being-Cautious.md"
+      - "15-Explaining-Causality.md"
+      - "11-Comparing-and-Contrasting.md"
+
+  Conclusion:
+    primary:
+      - "07-Writing-Conclusions.md"
+    supporting:
+      - "08-Being-Cautious.md"
+      - "13-Describing-Trends.md"
+
+# Cross-cutting resources (useful for any section)
+universal:
+  - "22-Academic-Style.md"
+  - "28-Sentence-Structure.md"
+  - "29-Paragraph-Structure.md"
+  - "31-Connecting-Words.md"
+  - "32-Commonly-Used-Verbs.md"

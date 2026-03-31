@@ -80,9 +80,27 @@ claude-code-workflow/
 |   +-- obsidian-bases/           # Obsidian database views (.base files)
 |   +-- json-canvas/              # Obsidian canvas files (.canvas)
 |
++-- autoresearch-hierarchical-grader/  # Multi-agent paper grading pipeline
+|   +-- orchestrator.py          # Entry point: 5-phase pipeline
+|   +-- agents/                  # 7 subagent prompts (parser, classifier, evidence, grader, rewriter, report)
+|   +-- config/                  # Rubric, weights, phrasebank index, NotebookLM notebooks
+|   +-- lib/                     # IR, parsing, scoring, triple-query modules
+|   +-- reference/               # Academic Phrasebank (34 chapters) + literature review rubric
+|   +-- tests/                   # Parser and safety tests
+|
 +-- commands/                     # Custom slash commands
     +-- debug.md                  # /debug -- Start systematic debugging
 ```
+
+### Autoresearch Hierarchical Grader
+
+A multi-agent pipeline that grades academic papers at paragraph and sentence level. It parses your paper, classifies sections, retrieves evidence from NotebookLM, grades against a rubric, and rewrites weak passages. Run with:
+
+```bash
+python autoresearch-hierarchical-grader/orchestrator.py --input <file> --notebook <key> --output <report>
+```
+
+See `autoresearch-hierarchical-grader/AGENTS.md` for the full architecture reference and `AUDIT_REPORT.md` for known issues.
 
 ### Where did the dev workflow skills go?
 

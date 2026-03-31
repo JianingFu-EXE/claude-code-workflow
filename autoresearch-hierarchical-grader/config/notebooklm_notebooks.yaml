@@ -1,0 +1,20 @@
+# NotebookLM notebook IDs per project
+# Used by the Evidence Retriever agent for triple-query verification
+
+notebooks:
+  meta-rl-ftc:
+    url: "https://notebooklm.google.com/notebook/a234fe16-3293-4066-bccd-c341435ad381"
+    description: "Meta-RL for Fault-Tolerant IPC (Chapter 5)"
+
+  dsac-wwc:
+    url: "https://notebooklm.google.com/notebook/9cfddb8e-0d57-4a0b-b66f-4495054daa6a"
+    description: "DSAC-WWC Distributional RL for FOWT (Chapter 4)"
+
+  thesis:
+    url: "https://notebooklm.google.com/notebook/27e615ab-dbca-445f-a29e-75306930d47a"
+    description: "Thesis-level notebook (general)"
+
+  # Add new project notebooks here:
+  # project-name:
+  #   url: "https://notebooklm.google.com/notebook/..."
+  #   description: "..."

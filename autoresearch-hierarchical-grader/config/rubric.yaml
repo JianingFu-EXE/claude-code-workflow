@@ -1,0 +1,399 @@
+# Hierarchical Grading Rubric
+# Derived from Literature Review Level.md (gold-standard samples)
+# Extended to all paper sections via Academic Phrasebank patterns
+#
+# Scoring: 0-5 per criterion. Optimal = all criteria >= 4.
+
+threshold: 4
+
+sections:
+
+  Background:
+    paragraph_criteria:
+      flow:
+        description: "Sentences connect logically with clear funnel progression"
+        score_5: "Perfect funnel: broad domain → quantified trend → specific technology in 2-3 sentences"
+        score_4: "Clear narrowing with minor gaps in logical chain"
+        score_3: "Progression visible but one jump feels abrupt"
+        score_2: "Multiple abrupt jumps; reader loses the thread"
+        score_1: "Sentences are loosely related but not a progression"
+        score_0: "Random ordering of claims"
+        gold_standard: "Funnel geometry: broad domain narrowed within 2-3 sentences"
+        red_flag: "Abrupt jumps between topics"
+      structural_integrity:
+        description: "Follows canonical Background pattern"
+        score_5: "Uses breadth-first enumeration + temporal anchor + quantified trend with policy data"
+        score_4: "Two of three patterns present and effective"
+        score_3: "One pattern present; others implied but not explicit"
+        score_2: "Pattern partially followed with significant gaps"
+        score_1: "No recognizable structural pattern"
+        score_0: "Counter-productive structure (e.g., starts specific, goes broad)"
+        gold_standard: "Breadth-first enumeration, temporal anchor ('Over the decades'), quantified trend"
+        red_flag: "Starts with specific technical detail without establishing domain"
+      argumentative_strength:
+        description: "Importance is self-evident from evidence presented"
+        score_5: "Concrete data: numbers, dates, policy targets (e.g., '75 GW by 2050')"
+        score_4: "Mostly concrete with one vague claim"
+        score_3: "Mix of concrete and vague claims"
+        score_2: "Mostly vague with one concrete datum"
+        score_1: "All claims are vague ('increasingly important', 'attracting attention')"
+        score_0: "No evidence provided; pure assertion"
+        gold_standard: "Numbers, dates, policy targets make importance self-evident"
+        red_flag: "Vague claims: 'increasingly important', 'attracting attention'"
+      section_function_alignment:
+        description: "Paragraph establishes that the broad domain commands attention"
+        score_5: "Reader immediately understands why this field matters via scale/impact/trend"
+        score_4: "Importance clear but could be more compelling"
+        score_3: "Importance implied but not directly demonstrated"
+        score_2: "Mixes background with problem statement"
+        score_1: "Fails to establish importance"
+        score_0: "Paragraph serves a different function entirely"
+        gold_standard: "Scale, societal impact, or technological trend demonstrated"
+        red_flag: "Problem statement mixed into background"
+    sentence_criteria:
+      linguistic_precision:
+        description: "Matches Introducing Work / Establishing importance patterns"
+        phrasebank_files: ["02-Introducing-Work.md", "13-Describing-Trends.md", "14-Describing-Quantities.md"]
+      functional_context:
+        description: "Sentence role: establish domain, narrow scope, or provide evidence"
+        stress: "concrete data usage, breadth-first enumeration, temporal anchors"
+      citation_appropriateness:
+        description: "2-4 foundational references, not exhaustive lists"
+        density_range: [2, 4]
+      transition_quality:
+        description: "Natural narrowing from broad to specific"
+        stress: "Funnel connectives, temporal markers"
+
+  Problem:
+    paragraph_criteria:
+      flow:
+        description: "Problem isolation follows logically from background context"
+        score_5: "Seamless pivot: 'However' + physical consequence leads to precise problem statement"
+        score_4: "Clear pivot with minor logical gap"
+        score_3: "Pivot present but connection to background is weak"
+        score_2: "Problem introduced without clear pivot from background"
+        score_1: "Problem appears disconnected from preceding context"
+        score_0: "No identifiable pivot mechanism"
+        gold_standard: "Physical-consequence pivot or cost-driven pivot"
+        red_flag: "Problem stated without connection to area"
+      structural_integrity:
+        description: "Two-step: (1) state problem, (2) prove widely studied"
+        score_5: "Both steps present with domain enumeration + deep dive or solution enumeration + elimination"
+        score_4: "Both steps present but one is underdeveloped"
+        score_3: "Only one step fully realized"
+        score_2: "Both steps attempted but neither convincing"
+        score_1: "Problem stated but not proven important"
+        score_0: "Neither step present"
+        gold_standard: "Domain enumeration + deep dive; solution enumeration + elimination; method taxonomy"
+        red_flag: "Problem asserted without evidence of study"
+      argumentative_strength:
+        description: "Consequence-driven framing with elimination of alternatives"
+        score_5: "Stacked-However pattern or definitional pivot with clear physical/economic stakes"
+        score_4: "Strong framing with minor gaps in consequence chain"
+        score_3: "Some consequence framing but alternatives not systematically eliminated"
+        score_2: "Consequence mentioned but not central to the argument"
+        score_1: "Abstract curiosity framing without physical stakes"
+        score_0: "No consequence or elimination logic"
+        gold_standard: "Stacked-However pattern, definitional pivot, 'if...not taken into account' framing"
+        red_flag: "Abstract academic curiosity without physical stakes"
+      section_function_alignment:
+        description: "Isolates specific technical problem and proves it consequential"
+        score_5: "Reader understands exactly what the problem is and why it matters"
+        score_4: "Problem clear, consequences mostly demonstrated"
+        score_3: "Problem identifiable but consequences vague"
+        score_2: "Problem too broad or too narrow for the area"
+        score_1: "Problem unclear to the reader"
+        score_0: "Paragraph does not isolate a problem"
+        gold_standard: "If-not-taken-into-account framing, cost/failure mode"
+        red_flag: "Problem too broad or too narrow for the established area"
+    sentence_criteria:
+      linguistic_precision:
+        phrasebank_files: ["09-Being-Critical.md", "15-Explaining-Causality.md"]
+      functional_context:
+        stress: "consequence-driven framing, 'However' pivot patterns, definitional precision"
+      citation_appropriateness:
+        density_range: [5, 15]
+      transition_quality:
+        stress: "'However' chains, 'If...not taken into account', cost-driven pivots"
+
+  Gap:
+    paragraph_criteria:
+      flow:
+        description: "Gap emerges logically from the review threads"
+        score_5: "Two review threads converge to reveal a precise, unfilled intersection"
+        score_4: "Gap follows from review with minor logical leap"
+        score_3: "Gap stated but connection to review threads is loose"
+        score_2: "Gap appears somewhat arbitrary relative to the review"
+        score_1: "Gap asserted without review foundation"
+        score_0: "No identifiable gap"
+        gold_standard: "Review of two threads independently, then gap at intersection"
+        red_flag: "Gap asserted without review evidence"
+      structural_integrity:
+        description: "Uses Venn-diagram, elimination, or domain-transfer pattern"
+        score_5: "Clear pattern (Venn: empty intersection; Elimination: all alternatives disqualified; Transfer: method proven elsewhere)"
+        score_4: "Pattern recognizable with minor imperfection"
+        score_3: "Pattern partially followed"
+        score_2: "No clear gap identification pattern"
+        score_1: "Gap identification attempted but structurally flawed"
+        score_0: "No structural pattern"
+        gold_standard: "Venn: two mature fields, empty intersection. Elimination: all alternatives eliminated. Transfer: method proven in adjacent domain."
+        red_flag: "Gap asserted without structured identification"
+      argumentative_strength:
+        description: "Gap is methodology-level, not just application-level"
+        score_5: "Stacked insufficiency or two-tier gap with escalation markers ('not to mention')"
+        score_4: "Methodology-level gap clearly identified"
+        score_3: "Gap identified but only at application level"
+        score_2: "Weak gap that could be addressed by minor extension of existing work"
+        score_1: "Gap is trivial or unconvincing"
+        score_0: "No gap argument"
+        gold_standard: "Stacked insufficiency, two-tier gap, consequence-to-solution chain"
+        red_flag: "Application-level gap masquerading as methodology gap"
+      section_function_alignment:
+        description: "Settles researched object AND sells adopted methodology"
+        score_5: "Both the 'what' (researched object) and 'how' (methodology choice) are justified by the review"
+        score_4: "Both justified with one being stronger than the other"
+        score_3: "Only one of the two is well-justified"
+        score_2: "Neither is convincingly justified"
+        score_1: "Section function unclear"
+        score_0: "Does not perform gap identification function"
+        gold_standard: "Researched object proven important + methodology gap stressed via review-based storytelling"
+        red_flag: "Methodology choice not motivated by the review"
+    sentence_criteria:
+      linguistic_precision:
+        phrasebank_files: ["09-Being-Critical.md", "03-Reviewing-the-Literature.md"]
+      functional_context:
+        stress: "Venn-diagram/elimination/transfer patterns, 'although...few' markers"
+      citation_appropriateness:
+        density_range: [0, 2]
+      transition_quality:
+        stress: "'However', 'To the best of our knowledge', 'not to mention', 'It should be pointed out that', 'although...very few', 'mainly focused on...while'"
+
+  Methodology:
+    paragraph_criteria:
+      flow:
+        description: "Gap-bridge statement connects review to proposed solution"
+        score_5: "'Summarizing the above discussions' or 'Consequently' bridges directly; every gap word reappears"
+        score_4: "Bridge present with most gap terms echoed"
+        score_3: "Bridge exists but missing key gap terms"
+        score_2: "Weak connection between gap and proposed method"
+        score_1: "No bridge; method introduced independently"
+        score_0: "Methodology paragraph not connected to preceding review"
+        gold_standard: "'Summarizing the above discussions' or 'Consequently' with gap-term mirroring"
+        red_flag: "Bridge disconnected from gaps"
+      structural_integrity:
+        description: "Three sub-flows: overall bridge, cross-domain evidence, same-domain + insufficiency"
+        score_5: "All three sub-flows present and complete"
+        score_4: "All three present, one underdeveloped"
+        score_3: "Two of three sub-flows present"
+        score_2: "Only one sub-flow present"
+        score_1: "No recognizable sub-flow structure"
+        score_0: "Methodology paragraph lacks structure"
+        gold_standard: "Overall bridge + cross-domain evidence + same-domain review with insufficiency"
+        red_flag: "Only states proposed method without evidence of viability"
+      argumentative_strength:
+        description: "Method credibility established via domain breadth and same-domain insufficiency"
+        score_5: "Method proven in 3+ adjacent domains AND same-domain attempts reviewed with specific insufficiency identified"
+        score_4: "Strong cross-domain or same-domain evidence (not both equally strong)"
+        score_3: "Some evidence provided but not systematically organized"
+        score_2: "Weak evidence for method viability"
+        score_1: "Method viability asserted without evidence"
+        score_0: "No viability argument"
+        gold_standard: "Cross-domain evidence (3+ domains) + same-domain attempts + specific insufficiency"
+        red_flag: "Method viability claimed without systematic evidence"
+      section_function_alignment:
+        description: "Proves the identified gap is bridged by the proposed method"
+        score_5: "Reader is convinced this method can address the gap based on the review"
+        score_4: "Mostly convincing with minor doubts"
+        score_3: "Partially convincing"
+        score_2: "Gap-bridge is weak"
+        score_1: "Method seems unrelated to the gap"
+        score_0: "No gap-bridge function"
+    sentence_criteria:
+      linguistic_precision:
+        phrasebank_files: ["04-Describing-Methods.md", "11-Comparing-and-Contrasting.md"]
+      functional_context:
+        stress: "gap-bridge statements, procedural clarity, cross-domain evidence"
+      citation_appropriateness:
+        density_range: [3, 10]
+      transition_quality:
+        stress: "'Summarizing', 'Consequently', 'For the purpose of', purpose-driven bridges"
+
+  Contribution:
+    paragraph_criteria:
+      flow:
+        description: "Contributions follow directly from gap statements"
+        score_5: "Each contribution point maps 1:1 to a gap with explicit traceability"
+        score_4: "Most contributions clearly trace to gaps"
+        score_3: "Some contributions trace to gaps, others are freestanding"
+        score_2: "Contributions listed but poorly connected to gaps"
+        score_1: "Contributions appear disconnected from the review narrative"
+        score_0: "No contribution list"
+        gold_standard: "1:1 gap-to-contribution mapping with traceability chain"
+        red_flag: "Contributions detached from the review narrative"
+      structural_integrity:
+        description: "Tripartite: domain-wise, research-problem-wise, methodology-wise"
+        score_5: "All three dimensions covered with numbered points"
+        score_4: "Three dimensions present, numbering clear"
+        score_3: "Two dimensions covered"
+        score_2: "Only one dimension covered"
+        score_1: "Contributions vague and unstructured"
+        score_0: "No structural organization"
+        gold_standard: "At least three numbered contribution points covering domain, problem, and methodology"
+        red_flag: "Single-dimension contribution list"
+      argumentative_strength:
+        description: "Each contribution is specific and verifiable"
+        score_5: "Contributions are precise, novel, and each addresses a specific gap"
+        score_4: "Mostly specific with one vague point"
+        score_3: "Mix of specific and vague contributions"
+        score_2: "Mostly vague contributions"
+        score_1: "Contributions are restatements of general goals"
+        score_0: "No substantive contribution claims"
+      section_function_alignment:
+        description: "Contribution list mirrors the three-level gap structure"
+        score_5: "Perfect mirror: reader can map each contribution back to the review"
+        score_4: "Strong mirror with one loose connection"
+        score_3: "Partial mirror"
+        score_2: "Weak mirror"
+        score_1: "No mirror relationship"
+        score_0: "Contribution list serves a different function"
+    sentence_criteria:
+      linguistic_precision:
+        phrasebank_files: ["02-Introducing-Work.md"]
+      functional_context:
+        stress: "tripartite structure, gap-to-contribution traceability, specificity"
+      citation_appropriateness:
+        density_range: [0, 2]
+      transition_quality:
+        stress: "'The main contributions are as follows', numbered list format"
+
+  Results:
+    paragraph_criteria:
+      flow:
+        description: "Setup → baseline comparison → result highlighting progression"
+        score_5: "Clear progression: experimental setup referenced, baselines compared, key result highlighted"
+        score_4: "Good progression with minor ordering issue"
+        score_3: "Results presented but progression is unclear"
+        score_2: "Results listed without logical ordering"
+        score_1: "Scattered presentation"
+        score_0: "No discernible flow"
+      structural_integrity:
+        description: "Location statement + highlighting statement pattern"
+        score_5: "Every table/figure referenced with location statement followed by highlighting of significant data"
+        score_4: "Most tables/figures properly referenced and highlighted"
+        score_3: "Some references missing or highlighting incomplete"
+        score_2: "Tables/figures mentioned but not properly highlighted"
+        score_1: "Results described without table/figure reference"
+        score_0: "No structural pattern"
+      argumentative_strength:
+        description: "Quantitative claims with proper comparisons"
+        score_5: "All claims backed by specific numbers, percentages, statistical measures"
+        score_4: "Mostly quantitative with minor gaps"
+        score_3: "Mix of quantitative and qualitative claims"
+        score_2: "Mostly qualitative"
+        score_1: "Vague claims ('improved significantly')"
+        score_0: "No quantitative evidence"
+      section_function_alignment:
+        description: "Presents evidence that the proposed method works"
+        score_5: "Reader can evaluate method effectiveness from the results alone"
+        score_4: "Strong evidence with minor gaps"
+        score_3: "Partial evidence"
+        score_2: "Insufficient evidence"
+        score_1: "Results do not clearly support the method"
+        score_0: "Results serve a different function"
+    sentence_criteria:
+      linguistic_precision:
+        phrasebank_files: ["05-Reporting-Results.md", "14-Describing-Quantities.md"]
+      functional_context:
+        stress: "quantitative precision, comparison language, statistical hedging"
+      citation_appropriateness:
+        density_range: [0, 3]
+      transition_quality:
+        stress: "'As shown in Table/Figure', 'The results indicate', result connectives"
+
+  Discussion:
+    paragraph_criteria:
+      flow:
+        description: "Result restatement → interpretation → literature comparison → implication"
+        score_5: "Clear discussion cycle: result → explain → compare to literature → imply"
+        score_4: "Good cycle with one missing element"
+        score_3: "Partial cycle"
+        score_2: "Discussion jumps between elements"
+        score_1: "Unstructured commentary"
+        score_0: "No discussion flow"
+      structural_integrity:
+        description: "Interpretation → limitations → implications structure"
+        score_5: "All three elements present and well-developed"
+        score_4: "All three present, one underdeveloped"
+        score_3: "Two elements present"
+        score_2: "Only interpretation present"
+        score_1: "No recognizable structure"
+        score_0: "Repeats results without discussion"
+      argumentative_strength:
+        description: "Results connected back to gaps and hypotheses"
+        score_5: "Each result explicitly linked to the gap it addresses with hedged interpretation"
+        score_4: "Most results linked with appropriate hedging"
+        score_3: "Some connections made"
+        score_2: "Weak connections to original gaps"
+        score_1: "Results discussed in isolation"
+        score_0: "No connection to research questions"
+      section_function_alignment:
+        description: "Explains what results mean, not just what they are"
+        score_5: "Reader understands implications for the field"
+        score_4: "Implications mostly clear"
+        score_3: "Some interpretation provided"
+        score_2: "Mostly descriptive"
+        score_1: "Repeats results section"
+        score_0: "Does not discuss findings"
+    sentence_criteria:
+      linguistic_precision:
+        phrasebank_files: ["06-Discussing-Findings.md", "08-Being-Cautious.md"]
+      functional_context:
+        stress: "interpretation framing, limitation acknowledgment, implication scope"
+      citation_appropriateness:
+        density_range: [2, 8]
+      transition_quality:
+        stress: "'This suggests that', 'One possible explanation', hedging language"
+
+  Conclusion:
+    paragraph_criteria:
+      flow:
+        description: "Summary → main finding → future work"
+        score_5: "Crisp progression: what was done → what was found → what comes next"
+        score_4: "Clear progression with minor redundancy"
+        score_3: "All elements present but ordering suboptimal"
+        score_2: "Missing one element"
+        score_1: "Disorganized"
+        score_0: "No flow"
+      structural_integrity:
+        description: "Compressed summary without new information"
+        score_5: "Concise summary that introduces no new claims or data"
+        score_4: "Mostly concise with slight overextension"
+        score_3: "Some new information introduced"
+        score_2: "Significant new claims in conclusion"
+        score_1: "Conclusion introduces substantial new content"
+        score_0: "Not a conclusion"
+      argumentative_strength:
+        description: "Takeaway is specific and supported by results"
+        score_5: "Main finding stated precisely; future work is specific and actionable"
+        score_4: "Strong finding; future work somewhat vague"
+        score_3: "Finding present; future work generic"
+        score_2: "Vague finding and future work"
+        score_1: "No clear takeaway"
+        score_0: "Contradicts results"
+      section_function_alignment:
+        description: "Closes the paper with clear outcome and direction"
+        score_5: "Reader leaves with a precise understanding of contribution and next steps"
+        score_4: "Good closure with minor ambiguity"
+        score_3: "Partial closure"
+        score_2: "Weak closure"
+        score_1: "Does not provide closure"
+        score_0: "Abrupt ending"
+    sentence_criteria:
+      linguistic_precision:
+        phrasebank_files: ["07-Writing-Conclusions.md"]
+      functional_context:
+        stress: "summary compression, future work specificity"
+      citation_appropriateness:
+        density_range: [0, 2]
+      transition_quality:
+        stress: "'In conclusion', 'This study has shown that', 'Future work should address'"

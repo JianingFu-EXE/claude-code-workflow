@@ -1,0 +1,53 @@
+# Dynamic Weight Profiles for Sentence-Level Grading
+# Weights per section type, summing to 1.0
+# Implements "functional stressing" -- higher weights for the criteria
+# most critical to each section's academic function.
+
+weights:
+  Background:
+    linguistic_precision: 0.15
+    functional_context: 0.35      # stressed: concrete data, breadth-first, temporal
+    citation_appropriateness: 0.20
+    transition_quality: 0.30      # stressed: funnel geometry
+
+  Problem:
+    linguistic_precision: 0.15
+    functional_context: 0.35      # stressed: consequence framing, definitional precision
+    citation_appropriateness: 0.15
+    transition_quality: 0.35      # stressed: "However" pivots, cost-driven pivots
+
+  Gap:
+    linguistic_precision: 0.25    # stressed: "although...few", "not to mention"
+    functional_context: 0.35      # stressed: Venn/elimination/transfer patterns
+    citation_appropriateness: 0.10
+    transition_quality: 0.30      # stressed: gap markers
+
+  Methodology:
+    linguistic_precision: 0.20
+    functional_context: 0.40      # stressed: gap-bridge, procedural clarity
+    citation_appropriateness: 0.20
+    transition_quality: 0.20
+
+  Contribution:
+    linguistic_precision: 0.15
+    functional_context: 0.45      # stressed: tripartite, gap traceability
+    citation_appropriateness: 0.10
+    transition_quality: 0.30      # stressed: numbered structure
+
+  Results:
+    linguistic_precision: 0.25    # stressed: quantitative language
+    functional_context: 0.30      # stressed: comparison, statistical hedging
+    citation_appropriateness: 0.15
+    transition_quality: 0.30
+
+  Discussion:
+    linguistic_precision: 0.25    # stressed: hedging, interpretation
+    functional_context: 0.30      # stressed: limitation acknowledgment
+    citation_appropriateness: 0.20
+    transition_quality: 0.25
+
+  Conclusion:
+    linguistic_precision: 0.20
+    functional_context: 0.40      # stressed: summary compression
+    citation_appropriateness: 0.10
+    transition_quality: 0.30      # stressed: future work framing
